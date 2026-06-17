@@ -1,0 +1,134 @@
+[
+  {
+    "frage": "Wann wurde die Bundeswehr gegründet?",
+    "antworten": {
+      "A": "12. November 1955",
+      "B": "12. Oktober 1955",
+      "C": "12. Dezember 1955",
+      "D": "12. Februar 1955"
+    },
+    "richtig": "A",
+    "erklaerung": "Die Bundeswehr wurde am 12. November 1955 durch die Ernennung der ersten 101 Soldaten in der Bonner Ermekeilkaserne gegründet."
+  },
+  {
+    "frage": "Welches Symbol ist stark mit der Bundeswehr verbunden?",
+    "antworten": {
+      "A": "Roter Stern",
+      "B": "Goldener Adler",
+      "C": "Eisernes Kreuz",
+      "D": "Blauer Kreis mit Kreuz in der Mitte"
+    },
+    "richtig": "C",
+    "erklaerung": "Das Eiserne Kreuz ist ein historisches militärisches Symbol und wird in moderner Form als Erkennungszeichen der Bundeswehr genutzt. Es steht für militärische Tradition und die Zugehörigkeit zu den deutschen Streitkräften."
+  },
+  {
+    "frage": "Wer entscheidet über Auslandseinsätze der Bundeswehr?",
+    "antworten": {
+      "A": "Der Bundespräsident allein",
+      "B": "Der Deutsche Bundestag",
+      "C": "Der Generalinspekteur der Bundeswehr",
+      "D": "Die NATO allein"
+    },
+    "richtig": "B",
+    "erklaerung": "Auslandseinsätze bewaffneter deutscher Streitkräfte benötigen grundsätzlich die Zustimmung des Deutschen Bundestages. Deshalb wird die Bundeswehr auch als Parlamentsarmee bezeichnet."
+  },
+  {
+    "frage": "Wer war der erste Generalinspekteur der Bundeswehr?",
+    "antworten": {
+      "A": "Armin Zimmermann",
+      "B": "Gustav-Adolf Kuntzen",
+      "C": "Theodor Blank",
+      "D": "Adolf Heusinger"
+    },
+    "richtig": "D",
+    "erklaerung": "Am 1. Juni 1957 wurde mit General Adolf Heusinger der erste Generalinspekteur der am 12. November 1955 gegründeten Bundeswehr berufen."
+  },
+  {
+    "frage": "Wann wurde die Waldkaserne in Hilden erbaut?",
+    "antworten": {
+      "A": "1935",
+      "B": "1940",
+      "C": "1937",
+      "D": "1965"
+    },
+    "richtig": "C",
+    "erklaerung": "Sie wurde ab 1937 erbaut und erhielt am 7. Juli 1969 den Namen „Waldkaserne“."
+  },
+  {
+    "frage": "Wie viele Einsätze und Anerkannte Missionen sind zurzeit Aktiv?",
+    "antworten": {
+      "A": "14",
+      "B": "15",
+      "C": "16",
+      "D": "17"
+    },
+    "richtig": "D",
+    "erklaerung": "Derzeit 17 Einsätze und Anerkannte Missionen auf 3 Kontinenten und mit ca. 2000 Soldatinnen und Soldaten."
+  },
+  {
+    "frage": "Wer ist der aktuelle Generalinspekteur der Bundeswehr?",
+    "antworten": {
+      "A": "Carsten Breuer",
+      "B": "Eberhard Zorn",
+      "C": "Volker Wieker",
+      "D": "Klaus Naumann"
+    },
+    "richtig": "A",
+    "erklaerung": "Carsten Breuer ist ein General des Heeres der Bundeswehr und seit dem 17. März 2023 der 17. Generalinspekteur der Bundeswehr."
+  },
+  {
+    "frage": "Wie startet ein Teilnehmer den Durchgang?",
+    "antworten": {
+      "A": "Über den Button Quiz starten",
+      "B": "Über eine E-Mail",
+      "C": "Über eine SMS",
+      "D": "Gar nicht"
+    },
+    "richtig": "A",
+    "erklaerung": "Der Start erfolgt über den Button auf dem Startbildschirm."
+  },
+  {
+    "frage": "Wo befindet sich der HAUPTSITZ der Bundeswehr?",
+    "antworten": {
+      "A": "Bonn",
+      "B": "Frankfurt",
+      "C": "München",
+      "D": "Berlin"
+    },
+    "richtig": "A",
+    "erklaerung": "Der Hauptsitz der Bundeswehr, das Bundesministerium der Verteidigung (BMVg), ist auf zwei Dienstsitze aufgeteilt. Oberste Kommandobehörde ist der Hauptsitz in Bonn (Hardthöhe), während der zweite Dienstsitz im historischen Bendlerblock in Berlin liegt."
+  },
+  {
+    "frage": "Wann wurde die NATO gegründet?",
+    "antworten": {
+      "A": "6. April 1949",
+      "B": "3. April 1949",
+      "C": "15. April 1949",
+      "D": "4. April 1949"
+    },
+    "richtig": "D",
+    "erklaerung": "Die NATO wurde am 4. April 1949 gegründet."
+  },
+  {
+    "frage": "Was wird unter §12 im Soldatengesetz beschrieben?",
+    "antworten": {
+      "A": "Wahrheit",
+      "B": "Politische Betätigung",
+      "C": "Kameradschaft",
+      "D": "Pflichten des Vorgesetzten"
+    },
+    "richtig": "C",
+    "erklaerung": "Im §12 des Soldatengesetz wird die Kameradschaft beschrieben."
+  },
+  {
+    "frage": "Wo befindet sich der Hauptsitz der NATO?",
+    "antworten": {
+      "A": "Lüttich",
+      "B": "Amsterdam",
+      "C": "Brüssel",
+      "D": "Stockholm"
+    },
+    "richtig": "C",
+    "erklaerung": "Der Hauptsitz befindet sich in Brüssel, Belgien."
+  }
+]

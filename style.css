@@ -1,0 +1,244 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f1410;
+  --card: #182118;
+  --card2: #223024;
+  --text: #f1f5ee;
+  --muted: #b9c3b4;
+  --accent: #8faf72;
+  --danger: #d36a5d;
+  --success: #7ecf8a;
+  --border: rgba(255,255,255,.12);
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #2f3b2a, var(--bg) 60%);
+  color: var(--text);
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.card {
+  width: min(720px, 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01)), var(--card);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: clamp(24px, 5vw, 44px);
+  box-shadow: 0 24px 70px rgba(0,0,0,.35);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 12px;
+  background: rgba(143, 175, 114, .16);
+  color: var(--accent);
+  border: 1px solid rgba(143, 175, 114, .3);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: clamp(34px, 7vw, 58px);
+  margin: 0 0 16px;
+  line-height: .95;
+}
+
+h2 {
+  font-size: clamp(25px, 5vw, 38px);
+  margin: 26px 0;
+  line-height: 1.1;
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+.info-box {
+  margin: 24px 0;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+button {
+  border: 0;
+  border-radius: 18px;
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  background: var(--card2);
+  cursor: pointer;
+  min-height: 58px;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+.primary {
+  width: 100%;
+  background: linear-gradient(180deg, #a4c783, #789b5e);
+  color: #11180f;
+  margin-top: 18px;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.progressbar {
+  height: 10px;
+  background: rgba(255,255,255,.08);
+  border-radius: 999px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width .25s ease;
+}
+
+.answers {
+  display: grid;
+  gap: 12px;
+}
+
+.answer {
+  text-align: left;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+}
+
+.answer .letter {
+  background: rgba(255,255,255,.1);
+  padding: 4px 9px;
+  border-radius: 10px;
+  min-width: 34px;
+  text-align: center;
+}
+
+.answer.correct {
+  background: rgba(126, 207, 138, .18);
+  border-color: rgba(126, 207, 138, .55);
+}
+
+.answer.wrong {
+  background: rgba(211, 106, 93, .18);
+  border-color: rgba(211, 106, 93, .55);
+}
+
+.feedback {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  line-height: 1.35;
+  background: rgba(255,255,255,.06);
+}
+
+.feedback.good {
+  border: 1px solid rgba(126, 207, 138, .55);
+}
+
+.feedback.bad {
+  border: 1px solid rgba(211, 106, 93, .55);
+}
+
+.penalty {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(211, 106, 93, .12);
+  border: 1px solid rgba(211, 106, 93, .35);
+}
+
+.penalty h3 {
+  margin: 0 0 8px;
+}
+
+.penalty-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.result-grid div {
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 22px;
+  text-align: center;
+}
+
+.result-grid span {
+  display: block;
+  font-size: 42px;
+  font-weight: 900;
+}
+
+.result-grid small {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+#penalty-list {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+@media (max-width: 520px) {
+  .penalty-buttons,
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.question-image {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: 18px;
+  margin: 0 0 22px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+}
