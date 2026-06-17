@@ -77,15 +77,15 @@
     "erklaerung": "Carsten Breuer ist ein General des Heeres der Bundeswehr und seit dem 17. März 2023 der 17. Generalinspekteur der Bundeswehr."
   },
   {
-    "frage": "Wie startet ein Teilnehmer den Durchgang?",
+    "frage": "Wer ist der Oberbefehlshaber (zu Friedenszeiten)?",
     "antworten": {
-      "A": "Über den Button Quiz starten",
-      "B": "Über eine E-Mail",
-      "C": "Über eine SMS",
-      "D": "Gar nicht"
+      "A": "Bundeskanzler",
+      "B": "Bundesminister der Verteidigung",
+      "C": "Generalinspelteuer",
+      "D": "Bundestag"
     },
-    "richtig": "A",
-    "erklaerung": "Der Start erfolgt über den Button auf dem Startbildschirm."
+    "richtig": "B",
+    "erklaerung": "Der Bundesminister der Verteidigung ist der Oberbefehlshaber zu Friedenszeiten."
   },
   {
     "frage": "Wo befindet sich der HAUPTSITZ der Bundeswehr?",
