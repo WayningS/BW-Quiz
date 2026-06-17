@@ -55,7 +55,7 @@
     "erklaerung": "Sie wurde ab 1937 erbaut und erhielt am 7. Juli 1969 den Namen „Waldkaserne“."
   },
   {
-    "frage": "Wie viele Einsätze und Anerkannte Missionen sind zurzeit Aktiv?",
+    "frage": "Wie viele Einsätze und anerkannte Missionen sind zurzeit Aktiv?",
     "antworten": {
       "A": "14",
       "B": "15",
@@ -77,12 +77,12 @@
     "erklaerung": "Carsten Breuer ist ein General des Heeres der Bundeswehr und seit dem 17. März 2023 der 17. Generalinspekteur der Bundeswehr."
   },
   {
-    "frage": "Wie startet ein Teilnehmer den Durchgang?",
+    "frage": "Wer ist der Oberbefehlshaber (zu Friedenszeiten)?",
     "antworten": {
-      "A": "Über den Button Quiz starten",
-      "B": "Über eine E-Mail",
-      "C": "Über eine SMS",
-      "D": "Gar nicht"
+      "A": "Adolf Heusinger",
+      "B": "Der Generalinspekteur der Bundeswehr",
+      "C": "Bundesminister der Verteidigung",
+      "D": "Der Bundestag"
     },
     "richtig": "A",
     "erklaerung": "Der Start erfolgt über den Button auf dem Startbildschirm."
