@@ -166,7 +166,15 @@ function showResults() {
 }
 
 startBtn.addEventListener("click", startQuiz);
-restartBtn.addEventListener("click", startQuiz);
+function resetToStartScreen() {
+  currentIndex = 0;
+  correctCount = 0;
+  penalties = [];
+  quizQuestions = [];
+  showScreen(startScreen);
+}
+
+restartBtn.addEventListener("click", resetToStartScreen);
 nextBtn.addEventListener("click", nextQuestion);
 
 loadQuestions().catch((error) => {
