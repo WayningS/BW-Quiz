@@ -51,3 +51,11 @@ Update Timer ohne Panzer:
 - Das Panzer-Icon wurde entfernt.
 - Der 60-Sekunden-Kreis-Timer bleibt erhalten.
 - Der grüne Timer-Kreis läuft weiter ab.
+
+
+Prüfung aktuelle Version:
+- app.js Syntax geprüft.
+- fragen.json geprüft.
+- manifest.webmanifest geprüft.
+- style.css repariert: fehlende schließende Klammer am Ende ergänzt.
+- Tippfehler korrigiert: Generalinspelteuer -> Generalinspekteur.
