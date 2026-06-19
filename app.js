@@ -166,7 +166,8 @@ function updateTimerVisuals() {
 
   if (timerRing) {
     timerRing.style.strokeDasharray = `${CIRCLE_CIRCUMFERENCE}`;
-    timerRing.style.strokeDashoffset = `${dashOffset}`;
+    // Negative Richtung = links herum / gegen den Uhrzeigersinn
+    timerRing.style.strokeDashoffset = `${-dashOffset}`;
   }
 
   updateTankPosition(progress);
@@ -175,15 +176,23 @@ function updateTimerVisuals() {
 function updateTankPosition(progress) {
   if (!tankIcon) return;
 
-  const size = 220;
-  const center = size / 2;
+  const center = 110;
   const orbitRadius = 100;
 
-  const angle = (-90 + progress * 360) * (Math.PI / 180);
-  const x = center + orbitRadius * Math.cos(angle);
-  const y = center + orbitRadius * Math.sin(angle);
+  // Start oben, dann links herum gegen den Uhrzeigersinn
+  const angleDeg = -progress * 360;
+  const angleRad = angleDeg * (Math.PI / 180);
 
-  tankIcon.style.transform = `translate(${x - 18}px, ${y - 18}px) rotate(${progress * 360}deg)`;
+  const x = center + orbitRadius * Math.sin(angleRad);
+  const y = center - orbitRadius * Math.cos(angleRad);
+
+  // Panzer-Bild zeigt nach rechts. +180° bedeutet: oben startet er nach links,
+  // also in die Bewegungsrichtung des linken Umlaufs.
+  const rotationDeg = angleDeg + 180;
+
+  tankIcon.style.left = `${x}px`;
+  tankIcon.style.top = `${y}px`;
+  tankIcon.style.transform = `translate(-50%, -50%) rotate(${rotationDeg}deg)`;
 }
 
 function handleTimeUp() {

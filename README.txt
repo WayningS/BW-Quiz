@@ -31,3 +31,11 @@ Update Timer-Modus:
 - Außen läuft ein Kreis mit.
 - Ein kleiner Panzer startet oben und fährt im Uhrzeigersinn eine Runde.
 - Bei 0 Sekunden gilt die Frage als falsch und die normale 10er-Übungsauswahl erscheint.
+
+
+Update Panzer-Timer:
+- Das hochgeladene Panzer-Icon wurde als `panzer-icon.png` eingebunden.
+- Der Panzer startet oben am Kreis.
+- Der Panzer fährt links herum / gegen den Uhrzeigersinn.
+- Die Drehung des Panzers passt sich der Fahrtrichtung an.
+- Der grüne Timer-Ring läuft synchron in dieselbe Richtung ab.
