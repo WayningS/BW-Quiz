@@ -39,3 +39,9 @@ Update Panzer-Timer:
 - Der Panzer fährt links herum / gegen den Uhrzeigersinn.
 - Die Drehung des Panzers passt sich der Fahrtrichtung an.
 - Der grüne Timer-Ring läuft synchron in dieselbe Richtung ab.
+
+
+Update Panzer-Timer Fix:
+- Das Panzer-Icon wurde hellgrün eingefärbt, damit es auf dem dunklen Hintergrund sichtbar ist.
+- Panzer und grüner Timer-Balken laufen jetzt in dieselbe Richtung: gegen den Uhrzeigersinn.
+- Die Drehung wurde korrigiert, damit der Panzer nicht mehr auf dem Kopf fährt.
