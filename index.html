@@ -17,7 +17,7 @@
     <section id="start-screen" class="card">
       <div class="badge">Inoffizielle Quiz-Station</div>
       <h1>BW Quiz Station</h1>
-      <p class="lead">10 zufällige Fragen. Pro falscher Antwort: 10 Liegestütze oder 10 Kniebeugen.</p>
+      <p class="lead">10 Personen, 10 Fragen. Pro falscher Antwort: 10 Liegestütze oder 10 Kniebeugen. Joker: Gruppe fragen für 5 Wiederholungen.</p>
       <div class="info-box">
         <strong>Hinweis:</strong> Übungen erfolgen eigenverantwortlich. Bei Schmerzen, Verletzungen oder gesundheitlichen Einschränkungen abbrechen oder Alternative wählen.
       </div>
@@ -33,6 +33,17 @@
       <h2 id="question">Frage lädt...</h2>
       <img id="question-image" class="question-image hidden" alt="Bild zur Frage">
       <div id="answers" class="answers"></div>
+      <div id="joker-box" class="joker-box">
+        <button id="joker-btn" class="joker-button">Joker: Gruppe fragen</button>
+        <div id="joker-choice" class="joker-choice hidden">
+          <h3>Joker genutzt</h3>
+          <p>Wähle die Joker-Übung:</p>
+          <div class="penalty-buttons">
+            <button data-joker-penalty="Liegestütze">5 Liegestütze</button>
+            <button data-joker-penalty="Kniebeugen">5 Kniebeugen</button>
+          </div>
+        </div>
+      </div>
       <div id="feedback" class="feedback hidden"></div>
       <div id="penalty-box" class="penalty hidden">
         <h3>Falsch beantwortet</h3>

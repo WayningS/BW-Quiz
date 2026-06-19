@@ -242,3 +242,32 @@ button:active {
   background: rgba(255,255,255,.06);
   border: 1px solid var(--border);
 }
+
+
+.joker-box {
+  margin-top: 18px;
+}
+
+.joker-button {
+  width: 100%;
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.joker-button.used {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.joker-choice {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(143, 175, 114, .12);
+  border: 1px solid rgba(143, 175, 114, .35);
+}
+
+.joker-choice h3 {
+  margin: 0 0 8px;
+}

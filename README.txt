@@ -15,3 +15,11 @@ Wichtig:
 Update:
 - Der Ergebnis-Button führt jetzt zurück zum Startbildschirm.
 - Von dort kann ein neuer Durchgang sauber gestartet werden.
+
+
+Update Joker-Modus:
+- Jede Frage wird als Person 1 bis Person 10 angezeigt.
+- Pro Frage kann ein Joker genutzt werden: Gruppe fragen.
+- Joker kostet 5 Liegestütze oder 5 Kniebeugen, auch wenn die Antwort danach richtig ist.
+- Wenn die Antwort nach Joker trotzdem falsch ist, kommen zusätzlich 10 Liegestütze oder 10 Kniebeugen dazu.
+- Am Ende werden Joker-Übungen und Fehler-Übungen getrennt ausgewertet.
