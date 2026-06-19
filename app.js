@@ -41,7 +41,6 @@ const penaltyList = document.getElementById("penalty-list");
 const timerWrapper = document.getElementById("timer-wrapper");
 const timerSeconds = document.getElementById("timer-seconds");
 const timerRing = document.getElementById("timer-ring");
-const tankIcon = document.getElementById("tank-icon");
 
 const CIRCLE_RADIUS = 80;
 const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
@@ -170,29 +169,8 @@ function updateTimerVisuals() {
     timerRing.style.strokeDashoffset = `${dashOffset}`;
   }
 
-  updateTankPosition(progress);
 }
 
-function updateTankPosition(progress) {
-  if (!tankIcon) return;
-
-  const center = 110;
-  const orbitRadius = 100;
-
-  // Start oben, dann links herum gegen den Uhrzeigersinn
-  const angleDeg = -progress * 360;
-  const angleRad = angleDeg * (Math.PI / 180);
-
-  const x = center + orbitRadius * Math.sin(angleRad);
-  const y = center - orbitRadius * Math.cos(angleRad);
-
-  // Panzer-Bild zeigt bereits nach links. Oben fährt er gegen den Uhrzeigersinn nach links.
-  const rotationDeg = angleDeg;
-
-  tankIcon.style.left = `${x}px`;
-  tankIcon.style.top = `${y}px`;
-  tankIcon.style.transform = `translate(-50%, -50%) rotate(${rotationDeg}deg)`;
-}
 
 function handleTimeUp() {
   if (questionResolved) return;

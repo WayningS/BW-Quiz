@@ -45,3 +45,9 @@ Update Panzer-Timer Fix:
 - Das Panzer-Icon wurde hellgrün eingefärbt, damit es auf dem dunklen Hintergrund sichtbar ist.
 - Panzer und grüner Timer-Balken laufen jetzt in dieselbe Richtung: gegen den Uhrzeigersinn.
 - Die Drehung wurde korrigiert, damit der Panzer nicht mehr auf dem Kopf fährt.
+
+
+Update Timer ohne Panzer:
+- Das Panzer-Icon wurde entfernt.
+- Der 60-Sekunden-Kreis-Timer bleibt erhalten.
+- Der grüne Timer-Kreis läuft weiter ab.

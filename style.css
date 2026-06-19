@@ -329,19 +329,7 @@ button:active {
   margin-top: 6px;
 }
 
-.tank-icon {
-  position: absolute;
-  left: 110px;
-  top: 10px;
-  width: 72px;
-  height: auto;
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: center center;
-  transition: left .25s linear, top .25s linear, transform .25s linear;
-  z-index: 3;
-  pointer-events: none;
-  filter: drop-shadow(0 3px 5px rgba(0,0,0,.6));
-}
+
 
 
 .time-up .timer-ring {
@@ -359,7 +347,4 @@ button:active {
     font-size: 46px;
   }
 
-  .tank-icon {
-    width: 58px;
-  }
-}
+  
