@@ -1,4 +1,5 @@
 const TOTAL_QUESTIONS = 10;
+const QUESTION_TIME = 60;
 
 let allQuestions = [];
 let quizQuestions = [];
@@ -7,6 +8,10 @@ let correctCount = 0;
 let penalties = [];
 let jokerPenalties = [];
 let jokerUsedForCurrentQuestion = false;
+
+let timerInterval = null;
+let timeLeft = QUESTION_TIME;
+let questionResolved = false;
 
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
@@ -32,6 +37,14 @@ const jokerChoice = document.getElementById("joker-choice");
 const resultScore = document.getElementById("result-score");
 const resultWrong = document.getElementById("result-wrong");
 const penaltyList = document.getElementById("penalty-list");
+
+const timerWrapper = document.getElementById("timer-wrapper");
+const timerSeconds = document.getElementById("timer-seconds");
+const timerRing = document.getElementById("timer-ring");
+const tankIcon = document.getElementById("tank-icon");
+
+const CIRCLE_RADIUS = 80;
+const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
 
 async function loadQuestions() {
   const response = await fetch("./fragen.json?update=" + Date.now(), {
@@ -75,6 +88,7 @@ function startQuiz() {
 function renderQuestion() {
   const q = quizQuestions[currentIndex];
   jokerUsedForCurrentQuestion = false;
+  questionResolved = false;
 
   progressEl.textContent = `Person ${currentIndex + 1} / Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   scoreEl.textContent = `${correctCount} richtig`;
@@ -111,10 +125,93 @@ function renderQuestion() {
     btn.addEventListener("click", () => answerQuestion(letter));
     answersEl.appendChild(btn);
   }
+
+  startQuestionTimer();
+}
+
+function startQuestionTimer() {
+  stopQuestionTimer();
+
+  timeLeft = QUESTION_TIME;
+  updateTimerVisuals();
+  if (timerWrapper) {
+    timerWrapper.classList.remove("time-up");
+  }
+
+  timerInterval = setInterval(() => {
+    timeLeft -= 1;
+    updateTimerVisuals();
+
+    if (timeLeft <= 0) {
+      stopQuestionTimer();
+      handleTimeUp();
+    }
+  }, 1000);
+}
+
+function stopQuestionTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+
+function updateTimerVisuals() {
+  if (timerSeconds) {
+    timerSeconds.textContent = String(Math.max(timeLeft, 0));
+  }
+
+  const progress = (QUESTION_TIME - Math.max(timeLeft, 0)) / QUESTION_TIME;
+  const dashOffset = CIRCLE_CIRCUMFERENCE * progress;
+
+  if (timerRing) {
+    timerRing.style.strokeDasharray = `${CIRCLE_CIRCUMFERENCE}`;
+    timerRing.style.strokeDashoffset = `${dashOffset}`;
+  }
+
+  updateTankPosition(progress);
+}
+
+function updateTankPosition(progress) {
+  if (!tankIcon) return;
+
+  const size = 220;
+  const center = size / 2;
+  const orbitRadius = 100;
+
+  const angle = (-90 + progress * 360) * (Math.PI / 180);
+  const x = center + orbitRadius * Math.cos(angle);
+  const y = center + orbitRadius * Math.sin(angle);
+
+  tankIcon.style.transform = `translate(${x - 18}px, ${y - 18}px) rotate(${progress * 360}deg)`;
+}
+
+function handleTimeUp() {
+  if (questionResolved) return;
+
+  questionResolved = true;
+
+  [...answersEl.children].forEach((btn) => {
+    btn.disabled = true;
+    const letter = btn.querySelector(".letter").textContent;
+    const q = quizQuestions[currentIndex];
+    if (letter === q.richtig) btn.classList.add("correct");
+  });
+
+  if (jokerBox) jokerBox.classList.add("hidden");
+  if (jokerChoice) jokerChoice.classList.add("hidden");
+  if (timerWrapper) timerWrapper.classList.add("time-up");
+
+  feedbackEl.classList.remove("hidden");
+  feedbackEl.classList.remove("good");
+  feedbackEl.classList.add("bad");
+  feedbackEl.innerHTML = `<strong>Zeit abgelaufen.</strong><br>Die Frage gilt als falsch beantwortet.`;
+
+  penaltyBox.classList.remove("hidden");
 }
 
 function useJoker() {
-  if (jokerUsedForCurrentQuestion) return;
+  if (jokerUsedForCurrentQuestion || questionResolved) return;
 
   jokerUsedForCurrentQuestion = true;
 
@@ -144,6 +241,11 @@ document.querySelectorAll("[data-joker-penalty]").forEach((btn) => {
 });
 
 function answerQuestion(selected) {
+  if (questionResolved) return;
+
+  questionResolved = true;
+  stopQuestionTimer();
+
   const q = quizQuestions[currentIndex];
   const isCorrect = selected === q.richtig;
 
@@ -181,6 +283,7 @@ document.querySelectorAll("[data-penalty]").forEach((btn) => {
 });
 
 function nextQuestion() {
+  stopQuestionTimer();
   currentIndex++;
   if (currentIndex >= TOTAL_QUESTIONS) {
     showResults();
@@ -190,6 +293,7 @@ function nextQuestion() {
 }
 
 function showResults() {
+  stopQuestionTimer();
   progressFill.style.width = "100%";
   const wrong = TOTAL_QUESTIONS - correctCount;
 
@@ -228,6 +332,7 @@ function showResults() {
 }
 
 function resetToStartScreen() {
+  stopQuestionTimer();
   currentIndex = 0;
   correctCount = 0;
   penalties = [];

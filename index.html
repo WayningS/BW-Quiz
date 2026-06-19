@@ -30,6 +30,20 @@
         <span id="score">0 richtig</span>
       </div>
       <div class="progressbar"><div id="progress-fill"></div></div>
+
+      <div id="timer-wrapper" class="timer-wrapper">
+        <div class="timer-circle">
+          <svg class="timer-svg" viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="timer-track" cx="110" cy="110" r="80"></circle>
+            <circle id="timer-ring" class="timer-ring" cx="110" cy="110" r="80"></circle>
+          </svg>
+          <div id="tank-icon" class="tank-icon">🛡️</div>
+          <div class="timer-content">
+            <div id="timer-seconds" class="timer-seconds">60</div>
+            <div class="timer-label">Sekunden</div>
+          </div>
+        </div>
+      </div>
       <h2 id="question">Frage lädt...</h2>
       <img id="question-image" class="question-image hidden" alt="Bild zur Frage">
       <div id="answers" class="answers"></div>

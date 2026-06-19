@@ -23,3 +23,11 @@ Update Joker-Modus:
 - Joker kostet 5 Liegestütze oder 5 Kniebeugen, auch wenn die Antwort danach richtig ist.
 - Wenn die Antwort nach Joker trotzdem falsch ist, kommen zusätzlich 10 Liegestütze oder 10 Kniebeugen dazu.
 - Am Ende werden Joker-Übungen und Fehler-Übungen getrennt ausgewertet.
+
+
+Update Timer-Modus:
+- Pro Frage läuft jetzt ein 60-Sekunden-Timer.
+- In der Mitte wird die Restzeit als Zahl angezeigt.
+- Außen läuft ein Kreis mit.
+- Ein kleiner Panzer startet oben und fährt im Uhrzeigersinn eine Runde.
+- Bei 0 Sekunden gilt die Frage als falsch und die normale 10er-Übungsauswahl erscheint.
