@@ -347,3 +347,74 @@ button:active {
     font-size: 46px;
   }
 }
+
+
+.rules-box {
+  margin: 18px 0 24px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.rules-box p {
+  margin: 0 0 14px;
+}
+
+.rules-box p:last-child {
+  margin-bottom: 0;
+}
+
+.rules-box strong {
+  color: var(--text);
+}
+
+.rules-options {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.rules-options span {
+  display: block;
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(143, 175, 114, .12);
+  border: 1px solid rgba(143, 175, 114, .28);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.rules-options span:nth-child(2) {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font-weight: 700;
+  padding: 0;
+}
+
+.joker-rule span {
+  background: rgba(255,255,255,.07);
+}
+
+@media (max-width: 520px) {
+  .rules-box {
+    font-size: 15px;
+    padding: 16px;
+  }
+
+  .rules-options {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .rules-options span:nth-child(2) {
+    padding: 0;
+  }
+}

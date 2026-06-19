@@ -59,3 +59,9 @@ Prüfung aktuelle Version:
 - manifest.webmanifest geprüft.
 - style.css repariert: fehlende schließende Klammer am Ende ergänzt.
 - Tippfehler korrigiert: Generalinspelteuer -> Generalinspekteur.
+
+
+Update Startbildschirm:
+- Der Erklärungstext auf dem Home-Bildschirm wurde ausführlich und sauber formatiert.
+- Strafen bei falscher Antwort und Joker-Regel werden getrennt dargestellt.
+- Abstände und Darstellung für PC/iPad/Handy wurden angepasst.
