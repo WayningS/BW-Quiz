@@ -44,6 +44,8 @@ const jokerChoice = document.getElementById("joker-choice");
 
 const resultScore = document.getElementById("result-score");
 const resultWrong = document.getElementById("result-wrong");
+const totalPushups = document.getElementById("total-pushups");
+const totalSquats = document.getElementById("total-squats");
 const penaltyList = document.getElementById("penalty-list");
 
 const timerWrapper = document.getElementById("timer-wrapper");
@@ -339,6 +341,11 @@ function showResults() {
 
   const jokerPushups = jokerPenalties.filter(p => p === "Liegestütze").length;
   const jokerSquats = jokerPenalties.filter(p => p === "Kniebeugen").length;
+  const totalPushupCount = jokerPushups * 5 + pushups * 10;
+  const totalSquatCount = jokerSquats * 5 + squats * 10;
+
+  totalPushups.textContent = totalPushupCount.toString();
+  totalSquats.textContent = totalSquatCount.toString();
 
   penaltyList.innerHTML = "";
 
@@ -365,6 +372,13 @@ function showResults() {
   showScreen(resultScreen);
 }
 
+function confirmResetToStartScreen() {
+  const shouldReset = confirm("Zur Startseite zurückkehren? Das aktuelle Ergebnis wird zurückgesetzt.");
+  if (!shouldReset) return;
+
+  resetToStartScreen();
+}
+
 function resetToStartScreen() {
   stopQuestionTimer();
   currentIndex = 0;
@@ -381,7 +395,7 @@ if (jokerBtn) {
 
 startBtn.addEventListener("click", startQuiz);
 readyBtn.addEventListener("click", showCurrentQuestion);
-restartBtn.addEventListener("click", resetToStartScreen);
+restartBtn.addEventListener("click", confirmResetToStartScreen);
 nextBtn.addEventListener("click", nextQuestion);
 
 loadQuestions().catch((error) => {

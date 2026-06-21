@@ -213,6 +213,10 @@ button:active {
   margin: 24px 0;
 }
 
+.total-grid {
+  margin-top: 12px;
+}
+
 .result-grid div {
   background: rgba(255,255,255,.06);
   border: 1px solid var(--border);

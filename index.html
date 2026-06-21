@@ -82,7 +82,7 @@
         <button id="joker-btn" class="joker-button">Joker: Gruppe fragen</button>
         <div id="joker-choice" class="joker-choice hidden">
           <h3>Joker genutzt</h3>
-          <p>Wähle die Joker-Übung:</p>
+          <p>Wähle die Joker-Übung für die Endauswertung:</p>
           <div class="penalty-buttons">
             <button data-joker-penalty="Liegestütze">5 Liegestütze</button>
             <button data-joker-penalty="Kniebeugen">5 Kniebeugen</button>
@@ -92,7 +92,7 @@
       <div id="feedback" class="feedback hidden"></div>
       <div id="penalty-box" class="penalty hidden">
         <h3>Falsch beantwortet</h3>
-        <p>Wähle deine Übung:</p>
+        <p>Wähle die Übung für die Endauswertung:</p>
         <div class="penalty-buttons">
           <button data-penalty="Liegestütze">10 Liegestütze</button>
           <button data-penalty="Kniebeugen">10 Kniebeugen</button>
@@ -107,6 +107,11 @@
       <div class="result-grid">
         <div><span id="result-score">0/10</span><small>Richtig</small></div>
         <div><span id="result-wrong">0</span><small>Falsch</small></div>
+      </div>
+      <h3>Gesamtsumme</h3>
+      <div class="result-grid total-grid">
+        <div><span id="total-pushups">0</span><small>Liegestütze gesamt</small></div>
+        <div><span id="total-squats">0</span><small>Kniebeugen gesamt</small></div>
       </div>
       <h3>Gewählte Übungen</h3>
       <ul id="penalty-list"></ul>
