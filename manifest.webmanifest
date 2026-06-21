@@ -1,11 +1,11 @@
 {
-  "name": "BW Quiz Station",
-  "short_name": "BW Quiz",
+  "name": "Feldjägerregiment 2 Hilden Quizstation",
+  "short_name": "FJgRgt 2 Quiz",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0f1410",
-  "theme_color": "#1f2a1f",
-  "description": "Inoffizielle Quiz-Station mit 10 Fragen und Übungs-Auswahl bei falschen Antworten.",
+  "background_color": "#090d0a",
+  "theme_color": "#231013",
+  "description": "Inoffizielle Quizstation im Stil Feldjägerregiment 2 Hilden mit 10 Fragen und Endauswertung.",
   "icons": [
     {
       "src": "icon.svg",

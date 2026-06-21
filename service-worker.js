@@ -1,4 +1,4 @@
-const CACHE_NAME = "bw-quiz-offline-v2";
+const CACHE_NAME = "fjgrgt2-hilden-quiz-offline-v1";
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -24,7 +24,7 @@ self.addEventListener("activate", (event) => {
     caches.keys()
       .then((cacheNames) => Promise.all(
         cacheNames
-          .filter((cacheName) => cacheName.startsWith("bw-quiz-") && cacheName !== CACHE_NAME)
+          .filter((cacheName) => cacheName.startsWith("fjgrgt2-hilden-quiz-") && cacheName !== CACHE_NAME)
           .map((cacheName) => caches.delete(cacheName))
       ))
       .then(() => self.clients.claim())

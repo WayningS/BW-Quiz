@@ -1,6 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="110" fill="#182118"/>
-  <circle cx="256" cy="256" r="172" fill="#2f3b2a"/>
-  <path d="M256 88l44 120h124l-100 74 38 122-106-72-106 72 38-122-100-74h124z" fill="#8faf72"/>
-  <text x="256" y="292" text-anchor="middle" font-size="96" font-family="Arial, sans-serif" font-weight="900" fill="#11180f">Q</text>
+  <rect width="512" height="512" rx="74" fill="#090d0a"/>
+  <rect x="42" y="42" width="428" height="428" rx="42" fill="#121a13" stroke="#7b232b" stroke-width="12"/>
+  <path d="M256 82l132 48v110c0 86-50 151-132 190-82-39-132-104-132-190V130z" fill="#1e2a20" stroke="#c1a45b" stroke-width="10"/>
+  <path d="M156 246h200" stroke="#7b232b" stroke-width="24" stroke-linecap="square"/>
+  <path d="M256 146v200" stroke="#7b232b" stroke-width="24" stroke-linecap="square"/>
+  <text x="256" y="243" text-anchor="middle" font-family="Arial, sans-serif" font-size="68" font-weight="900" fill="#f4efe1">FJg</text>
+  <text x="256" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="82" font-weight="900" fill="#c1a45b">2</text>
+  <text x="256" y="394" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="2" fill="#f4efe1">HILDEN</text>
 </svg>

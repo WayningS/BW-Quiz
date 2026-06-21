@@ -1,5 +1,10 @@
 # BW Quiz Station - gefixte Version
 
+Design-Variante:
+- Diese Variante nutzt ein eigenes, nicht-offizielles Design für eine Quizstation mit Bezug zu Feldjägerregiment 2 Hilden.
+- Das Icon und die Markierung "FJg 2" sind selbst erstellt und kein offizielles Verbandsabzeichen oder Bundeswehr-Logo.
+- Ein offizielles Logo/Wappen sollte nur mit ausdrücklicher Freigabe der zuständigen Stelle verwendet werden.
+
 Offline-Nutzung:
 - Die App kann nach dem ersten erfolgreichen Online-Aufruf auch ohne Empfang genutzt werden.
 - Vor dem Übungsplatz die Website einmal mit Internet öffnen, damit alle Dateien gespeichert werden.
