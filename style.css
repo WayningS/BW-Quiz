@@ -159,6 +159,11 @@ button:active {
   border-color: rgba(211, 106, 93, .55);
 }
 
+.answer.locked {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
 .feedback {
   margin-top: 18px;
   padding: 16px;

@@ -8,6 +8,7 @@ let correctCount = 0;
 let penalties = [];
 let jokerPenalties = [];
 let jokerUsedForCurrentQuestion = false;
+let jokerPenaltySelectedForCurrentQuestion = false;
 
 let timerInterval = null;
 let timeLeft = QUESTION_TIME;
@@ -68,6 +69,13 @@ function showScreen(screen) {
   screen.classList.remove("hidden");
 }
 
+function setAnswerButtonsLocked(locked) {
+  [...answersEl.children].forEach((btn) => {
+    btn.disabled = locked;
+    btn.classList.toggle("locked", locked);
+  });
+}
+
 function startQuiz() {
   currentIndex = 0;
   correctCount = 0;
@@ -87,6 +95,7 @@ function startQuiz() {
 function renderQuestion() {
   const q = quizQuestions[currentIndex];
   jokerUsedForCurrentQuestion = false;
+  jokerPenaltySelectedForCurrentQuestion = false;
   questionResolved = false;
 
   progressEl.textContent = `Person ${currentIndex + 1} / Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
@@ -179,13 +188,16 @@ function handleTimeUp() {
 
   [...answersEl.children].forEach((btn) => {
     btn.disabled = true;
+    btn.classList.remove("locked");
     const letter = btn.querySelector(".letter").textContent;
     const q = quizQuestions[currentIndex];
     if (letter === q.richtig) btn.classList.add("correct");
   });
 
-  if (jokerBox) jokerBox.classList.add("hidden");
-  if (jokerChoice) jokerChoice.classList.add("hidden");
+  const jokerPenaltyPending = jokerUsedForCurrentQuestion && !jokerPenaltySelectedForCurrentQuestion;
+
+  if (jokerBox) jokerBox.classList.toggle("hidden", !jokerPenaltyPending);
+  if (jokerChoice) jokerChoice.classList.toggle("hidden", !jokerPenaltyPending);
   if (timerWrapper) timerWrapper.classList.add("time-up");
 
   feedbackEl.classList.remove("hidden");
@@ -193,18 +205,20 @@ function handleTimeUp() {
   feedbackEl.classList.add("bad");
   feedbackEl.innerHTML = `<strong>Zeit abgelaufen.</strong><br>Die Frage gilt als falsch beantwortet.`;
 
-  penaltyBox.classList.remove("hidden");
+  penaltyBox.classList.toggle("hidden", jokerPenaltyPending);
 }
 
 function useJoker() {
   if (jokerUsedForCurrentQuestion || questionResolved) return;
 
   jokerUsedForCurrentQuestion = true;
+  jokerPenaltySelectedForCurrentQuestion = false;
+  setAnswerButtonsLocked(true);
 
   if (jokerBtn) {
     jokerBtn.disabled = true;
     jokerBtn.classList.add("used");
-    jokerBtn.textContent = "Joker wurde genutzt";
+    jokerBtn.textContent = "Erst Joker-Übung wählen";
   }
 
   if (jokerChoice) {
@@ -214,6 +228,9 @@ function useJoker() {
 
 document.querySelectorAll("[data-joker-penalty]").forEach((btn) => {
   btn.addEventListener("click", () => {
+    if (!jokerUsedForCurrentQuestion || jokerPenaltySelectedForCurrentQuestion) return;
+
+    jokerPenaltySelectedForCurrentQuestion = true;
     jokerPenalties.push(btn.dataset.jokerPenalty);
 
     if (jokerChoice) {
@@ -222,6 +239,13 @@ document.querySelectorAll("[data-joker-penalty]").forEach((btn) => {
 
     if (jokerBtn) {
       jokerBtn.textContent = "Joker: Gruppe darf helfen";
+    }
+
+    if (questionResolved) {
+      if (jokerBox) jokerBox.classList.add("hidden");
+      penaltyBox.classList.remove("hidden");
+    } else {
+      setAnswerButtonsLocked(false);
     }
   });
 });
