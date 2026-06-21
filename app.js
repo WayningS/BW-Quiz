@@ -46,7 +46,6 @@ const resultScore = document.getElementById("result-score");
 const resultWrong = document.getElementById("result-wrong");
 const totalPushups = document.getElementById("total-pushups");
 const totalSquats = document.getElementById("total-squats");
-const penaltyList = document.getElementById("penalty-list");
 
 const timerWrapper = document.getElementById("timer-wrapper");
 const timerSeconds = document.getElementById("timer-seconds");
@@ -123,7 +122,7 @@ function renderQuestion() {
   jokerPenaltySelectedForCurrentQuestion = false;
   questionResolved = false;
 
-  progressEl.textContent = `Person ${currentIndex + 1} / Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
+  progressEl.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   scoreEl.textContent = `${correctCount} richtig`;
   progressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
@@ -346,28 +345,6 @@ function showResults() {
 
   totalPushups.textContent = totalPushupCount.toString();
   totalSquats.textContent = totalSquatCount.toString();
-
-  penaltyList.innerHTML = "";
-
-  if (penalties.length === 0 && jokerPenalties.length === 0) {
-    penaltyList.innerHTML = "<li>Keine Übungen nötig. Starker Durchgang.</li>";
-  } else {
-    if (jokerPushups > 0) {
-      penaltyList.innerHTML += `<li>Joker: ${jokerPushups}x Liegestütze = ${jokerPushups * 5} Liegestütze gesamt</li>`;
-    }
-
-    if (jokerSquats > 0) {
-      penaltyList.innerHTML += `<li>Joker: ${jokerSquats}x Kniebeugen = ${jokerSquats * 5} Kniebeugen gesamt</li>`;
-    }
-
-    if (pushups > 0) {
-      penaltyList.innerHTML += `<li>Falsche Antwort: ${pushups}x Liegestütze = ${pushups * 10} Liegestütze gesamt</li>`;
-    }
-
-    if (squats > 0) {
-      penaltyList.innerHTML += `<li>Falsche Antwort: ${squats}x Kniebeugen = ${squats * 10} Kniebeugen gesamt</li>`;
-    }
-  }
 
   showScreen(resultScreen);
 }

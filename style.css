@@ -236,12 +236,6 @@ button:active {
   font-weight: 700;
 }
 
-#penalty-list {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 18px;
-}
-
 @media (max-width: 520px) {
   .penalty-buttons,
   .result-grid {
