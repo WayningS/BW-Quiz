@@ -1,16 +1,16 @@
 # BW Quiz Station - gefixte Version
 
-Design-Variante:
-- Diese Variante nutzt ein eigenes, nicht-offizielles Design für eine Quizstation mit Bezug zu Feldjägerregiment 2 Hilden.
-- Das Icon und die Markierung "FJg 2" sind selbst erstellt und kein offizielles Verbandsabzeichen oder Bundeswehr-Logo.
-- Ein offizielles Logo/Wappen sollte nur mit ausdrücklicher Freigabe der zuständigen Stelle verwendet werden.
-
 Offline-Nutzung:
 - Die App kann nach dem ersten erfolgreichen Online-Aufruf auch ohne Empfang genutzt werden.
 - Vor dem Übungsplatz die Website einmal mit Internet öffnen, damit alle Dateien gespeichert werden.
 - Auf dem iPad am besten über Safari öffnen und zum Home-Bildschirm hinzufügen.
 - Danach kann die App auch nach Bildschirm aus/an wieder gestartet werden.
 - Nach Änderungen an Fragen oder Code die Website einmal mit Internet neu öffnen, damit die neue Version gespeichert wird.
+
+Design-Auswahl:
+- Die App enthält zwei Designs: Ausstellung und Klassisch.
+- Der Umschalter befindet sich unten in der Statusleiste.
+- Die gewählte Optik wird auf dem Gerät gespeichert und beim nächsten Öffnen wieder geladen.
 
 Fragen aktivieren/deaktivieren:
 - In fragen.json können Fragen mit "aktiv": false im Fragenpool behalten, aber aus dem Quiz entfernt werden.

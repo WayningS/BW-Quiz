@@ -5,25 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#1f2a1f">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="FJgRgt 2 Quiz">
+  <meta name="apple-mobile-web-app-title" content="BW Quiz">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="stylesheet" href="style.css">
-  <title>FJgRgt 2 Hilden Quizstation</title>
+  <title>Übungsplatz Wildflecken Bundeswehr Quiz</title>
 </head>
-<body>
+<body class="theme-exhibition">
+  <header class="site-header">
+    <span>TEAM ZWO</span>
+    <span>Quizstation</span>
+  </header>
+
   <main class="app">
     <section id="start-screen" class="card">
       <div class="unit-lockup">
         <div class="unit-mark" aria-hidden="true">
+          <div class="flag-band">
+            <i></i>
+            <i></i>
+            <i></i>
+          </div>
           <span>FJg</span>
           <strong>2</strong>
         </div>
         <div>
           <div class="badge">Inoffizielle Quizstation</div>
-          <h1>Feldjägerregiment 2 Hilden</h1>
-          <p class="lead">Station Bundeswehr/NATO</p>
+          <h1>Übungsplatz Wildflecken Station: Bundeswehr Quiz</h1>
+          <p class="lead">Bundeswehr / NATO</p>
         </div>
       </div>
       <div class="rules-box">
@@ -54,7 +64,7 @@
     </section>
 
     <section id="ready-screen" class="card hidden">
-      <div class="badge">Bereitmeldung</div>
+      <div class="badge">Nächste Frage</div>
       <h1 id="ready-title">Soldat 1 bereit?</h1>
       <p class="ready-text">Timer startet erst nach Klick.</p>
       <div class="top-row">
@@ -127,6 +137,7 @@
   </main>
 
   <div class="app-corner" aria-live="polite">
+    <button id="theme-toggle" class="theme-toggle" type="button">Design: Ausstellung</button>
     <span id="connection-status">Online</span>
     <span id="question-version">Fragen-Version: lädt...</span>
     <span>Entwickelt von Ubi</span>

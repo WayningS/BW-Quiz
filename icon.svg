@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="74" fill="#090d0a"/>
-  <rect x="42" y="42" width="428" height="428" rx="42" fill="#121a13" stroke="#7b232b" stroke-width="12"/>
-  <path d="M256 82l132 48v110c0 86-50 151-132 190-82-39-132-104-132-190V130z" fill="#1e2a20" stroke="#c1a45b" stroke-width="10"/>
-  <path d="M156 246h200" stroke="#7b232b" stroke-width="24" stroke-linecap="square"/>
-  <path d="M256 146v200" stroke="#7b232b" stroke-width="24" stroke-linecap="square"/>
-  <text x="256" y="243" text-anchor="middle" font-family="Arial, sans-serif" font-size="68" font-weight="900" fill="#f4efe1">FJg</text>
-  <text x="256" y="318" text-anchor="middle" font-family="Arial, sans-serif" font-size="82" font-weight="900" fill="#c1a45b">2</text>
-  <text x="256" y="394" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="2" fill="#f4efe1">HILDEN</text>
+  <rect width="512" height="512" rx="72" fill="#f5f0e6"/>
+  <rect x="40" y="40" width="432" height="432" rx="38" fill="#101312" stroke="#111111" stroke-width="10"/>
+  <rect x="68" y="68" width="376" height="76" rx="10" fill="#050505"/>
+  <rect x="68" y="144" width="376" height="76" fill="#d00"/>
+  <rect x="68" y="220" width="376" height="76" fill="#ffce00"/>
+  <path d="M256 146l112 42v92c0 74-42 130-112 164-70-34-112-90-112-164v-92z" fill="#f5f0e6" stroke="#111111" stroke-width="9"/>
+  <text x="256" y="282" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" font-weight="900" fill="#111111">FJg</text>
+  <text x="256" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="92" font-weight="900" fill="#991f28">2</text>
+  <text x="256" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="900" letter-spacing="2" fill="#f5f0e6">QUIZ</text>
 </svg>

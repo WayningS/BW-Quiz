@@ -1,6 +1,19 @@
 const TOTAL_QUESTIONS = 10;
 const QUESTION_TIME = 60;
 const TIMER_WARNING_TIME = 10;
+const THEME_STORAGE_KEY = "bwQuizTheme";
+const THEMES = {
+  exhibition: {
+    bodyClass: "theme-exhibition",
+    buttonText: "Design: Ausstellung",
+    themeColor: "#111111"
+  },
+  classic: {
+    bodyClass: "theme-classic",
+    buttonText: "Design: Klassisch",
+    themeColor: "#1f2a1f"
+  }
+};
 
 let allQuestions = [];
 let quizQuestions = [];
@@ -54,6 +67,8 @@ const timerSeconds = document.getElementById("timer-seconds");
 const timerRing = document.getElementById("timer-ring");
 const connectionStatus = document.getElementById("connection-status");
 const questionVersion = document.getElementById("question-version");
+const themeToggle = document.getElementById("theme-toggle");
+const themeColorMeta = document.querySelector("meta[name='theme-color']");
 
 const CIRCLE_RADIUS = 80;
 const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
@@ -99,6 +114,46 @@ function setAnswerButtonsLocked(locked) {
     btn.disabled = locked;
     btn.classList.toggle("locked", locked);
   });
+}
+
+function getSavedTheme() {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY);
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveTheme(themeName) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, themeName);
+  } catch (error) {
+    // Die App funktioniert auch ohne gespeicherte Design-Auswahl.
+  }
+}
+
+function applyTheme(themeName) {
+  const selectedTheme = THEMES[themeName] ? themeName : "exhibition";
+  const theme = THEMES[selectedTheme];
+
+  document.body.classList.remove(THEMES.exhibition.bodyClass, THEMES.classic.bodyClass);
+  document.body.classList.add(theme.bodyClass);
+  document.body.dataset.theme = selectedTheme;
+
+  if (themeToggle) {
+    themeToggle.textContent = theme.buttonText;
+  }
+
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", theme.themeColor);
+  }
+
+  saveTheme(selectedTheme);
+}
+
+function toggleTheme() {
+  const currentTheme = document.body.dataset.theme === "classic" ? "classic" : "exhibition";
+  applyTheme(currentTheme === "classic" ? "exhibition" : "classic");
 }
 
 function updateConnectionStatus() {
@@ -411,8 +466,12 @@ startBtn.addEventListener("click", startQuiz);
 readyBtn.addEventListener("click", showCurrentQuestion);
 restartBtn.addEventListener("click", confirmResetToStartScreen);
 nextBtn.addEventListener("click", nextQuestion);
+if (themeToggle) {
+  themeToggle.addEventListener("click", toggleTheme);
+}
 window.addEventListener("online", updateConnectionStatus);
 window.addEventListener("offline", updateConnectionStatus);
+applyTheme(getSavedTheme() || "exhibition");
 updateConnectionStatus();
 
 loadQuestions().catch((error) => {

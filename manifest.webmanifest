@@ -1,11 +1,11 @@
 {
-  "name": "Feldjägerregiment 2 Hilden Quizstation",
-  "short_name": "FJgRgt 2 Quiz",
+  "name": "Übungsplatz Wildflecken Bundeswehr Quiz",
+  "short_name": "BW Quiz",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#090d0a",
-  "theme_color": "#231013",
-  "description": "Inoffizielle Quizstation im Stil Feldjägerregiment 2 Hilden mit 10 Fragen und Endauswertung.",
+  "background_color": "#f5f0e6",
+  "theme_color": "#111111",
+  "description": "Inoffizielle Quizstation mit zwei Designs, 10 Fragen und Endauswertung.",
   "icons": [
     {
       "src": "icon.svg",
