@@ -7,6 +7,11 @@ Offline-Nutzung:
 - Danach kann die App auch nach Bildschirm aus/an wieder gestartet werden.
 - Nach Änderungen an Fragen oder Code die Website einmal mit Internet neu öffnen, damit die neue Version gespeichert wird.
 
+Fragen aktivieren/deaktivieren:
+- In fragen.json können Fragen mit "aktiv": false im Fragenpool behalten, aber aus dem Quiz entfernt werden.
+- Zum späteren Reaktivieren den Wert auf true setzen oder die Zeile entfernen.
+- Aktuell sind 12 Fragen gespeichert und 10 Fragen aktiv.
+
 Diese Version behebt:
 - Syntax-Fehler in app.js
 - Ergebnisanzeige für Liegestütze/Kniebeugen

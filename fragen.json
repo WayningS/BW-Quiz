@@ -1,4 +1,6 @@
-[
+{
+  "version": "21.06.2026",
+  "fragen": [
   {
     "frage": "Wann wurde die Bundeswehr gegründet?",
     "antworten": {
@@ -11,6 +13,7 @@
     "erklaerung": "Die Bundeswehr wurde am 12. November 1955 durch die Ernennung der ersten 101 Soldaten in der Bonner Ermekeilkaserne gegründet."
   },
   {
+    "aktiv": false,
     "frage": "Welches Symbol ist stark mit der Bundeswehr verbunden?",
     "antworten": {
       "A": "Roter Stern",
@@ -55,6 +58,7 @@
     "erklaerung": "Sie wurde ab 1937 erbaut und erhielt am 7. Juli 1969 den Namen „Waldkaserne“."
   },
   {
+    "aktiv": false,
     "frage": "Wie viele Einsätze und Anerkannte Missionen sind zurzeit Aktiv?",
     "antworten": {
       "A": "14",
@@ -131,4 +135,5 @@
     "richtig": "C",
     "erklaerung": "Der Hauptsitz befindet sich in Brüssel, Belgien."
   }
-]
+  ]
+}

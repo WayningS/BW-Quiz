@@ -1,5 +1,6 @@
 const TOTAL_QUESTIONS = 10;
 const QUESTION_TIME = 60;
+const TIMER_WARNING_TIME = 10;
 
 let allQuestions = [];
 let quizQuestions = [];
@@ -13,6 +14,7 @@ let jokerPenaltySelectedForCurrentQuestion = false;
 let timerInterval = null;
 let timeLeft = QUESTION_TIME;
 let questionResolved = false;
+let offlineReady = false;
 
 const startScreen = document.getElementById("start-screen");
 const readyScreen = document.getElementById("ready-screen");
@@ -50,6 +52,8 @@ const totalSquats = document.getElementById("total-squats");
 const timerWrapper = document.getElementById("timer-wrapper");
 const timerSeconds = document.getElementById("timer-seconds");
 const timerRing = document.getElementById("timer-ring");
+const connectionStatus = document.getElementById("connection-status");
+const questionVersion = document.getElementById("question-version");
 
 const CIRCLE_RADIUS = 80;
 const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
@@ -63,7 +67,19 @@ async function loadQuestions() {
     throw new Error("fragen.json konnte nicht geladen werden.");
   }
 
-  allQuestions = await response.json();
+  const data = await response.json();
+  const questionData = Array.isArray(data) ? data : data.fragen;
+  const version = Array.isArray(data) ? "ohne Angabe" : data.version || "ohne Angabe";
+
+  if (!Array.isArray(questionData)) {
+    throw new Error("fragen.json hat kein gültiges Fragenformat.");
+  }
+
+  allQuestions = questionData.filter((question) => question.aktiv !== false);
+
+  if (questionVersion) {
+    questionVersion.textContent = `Fragen-Version: ${version}`;
+  }
 }
 
 function shuffle(array) {
@@ -85,6 +101,19 @@ function setAnswerButtonsLocked(locked) {
   });
 }
 
+function updateConnectionStatus() {
+  if (!connectionStatus) return;
+
+  if (!navigator.onLine) {
+    connectionStatus.textContent = offlineReady ? "Offline bereit" : "Offline";
+  } else {
+    connectionStatus.textContent = offlineReady ? "Online / offline bereit" : "Online";
+  }
+
+  connectionStatus.classList.toggle("is-offline", !navigator.onLine);
+  connectionStatus.classList.toggle("is-ready", offlineReady);
+}
+
 function startQuiz() {
   currentIndex = 0;
   correctCount = 0;
@@ -93,7 +122,7 @@ function startQuiz() {
   quizQuestions = shuffle(allQuestions).slice(0, TOTAL_QUESTIONS);
 
   if (quizQuestions.length < TOTAL_QUESTIONS) {
-    alert(`Du brauchst mindestens ${TOTAL_QUESTIONS} Fragen in fragen.json.`);
+    alert(`Du brauchst mindestens ${TOTAL_QUESTIONS} aktive Fragen in fragen.json.`);
     return;
   }
 
@@ -169,6 +198,7 @@ function startQuestionTimer() {
   updateTimerVisuals();
   if (timerWrapper) {
     timerWrapper.classList.remove("time-up");
+    timerWrapper.classList.remove("timer-warning");
   }
 
   timerInterval = setInterval(() => {
@@ -203,6 +233,10 @@ function updateTimerVisuals() {
     timerRing.style.strokeDashoffset = `${dashOffset}`;
   }
 
+  if (timerWrapper) {
+    timerWrapper.classList.toggle("timer-warning", timeLeft > 0 && timeLeft <= TIMER_WARNING_TIME && !questionResolved);
+  }
+
 }
 
 
@@ -223,7 +257,10 @@ function handleTimeUp() {
 
   if (jokerBox) jokerBox.classList.toggle("hidden", !jokerPenaltyPending);
   if (jokerChoice) jokerChoice.classList.toggle("hidden", !jokerPenaltyPending);
-  if (timerWrapper) timerWrapper.classList.add("time-up");
+  if (timerWrapper) {
+    timerWrapper.classList.remove("timer-warning");
+    timerWrapper.classList.add("time-up");
+  }
 
   feedbackEl.classList.remove("hidden");
   feedbackEl.classList.remove("good");
@@ -374,6 +411,9 @@ startBtn.addEventListener("click", startQuiz);
 readyBtn.addEventListener("click", showCurrentQuestion);
 restartBtn.addEventListener("click", confirmResetToStartScreen);
 nextBtn.addEventListener("click", nextQuestion);
+window.addEventListener("online", updateConnectionStatus);
+window.addEventListener("offline", updateConnectionStatus);
+updateConnectionStatus();
 
 loadQuestions().catch((error) => {
   console.error(error);
@@ -384,6 +424,11 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./service-worker.js")
       .then((registration) => registration.update())
+      .then(() => navigator.serviceWorker.ready)
+      .then(() => {
+        offlineReady = true;
+        updateConnectionStatus();
+      })
       .catch((error) => console.error("Service Worker konnte nicht registriert werden.", error));
   });
 }
