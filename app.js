@@ -380,10 +380,10 @@ loadQuestions().catch((error) => {
   alert("Fehler beim Laden der Fragen. Prüfe die Datei fragen.json.");
 });
 
-// Alten Offline-Cache deaktivieren, damit neue Fragen sauber geladen werden.
-// Offline-Funktion können wir später wieder sauber einbauen.
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    registrations.forEach((registration) => registration.unregister());
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then((registration) => registration.update())
+      .catch((error) => console.error("Service Worker konnte nicht registriert werden.", error));
   });
 }

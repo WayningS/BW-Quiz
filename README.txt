@@ -1,5 +1,12 @@
 # BW Quiz Station - gefixte Version
 
+Offline-Nutzung:
+- Die App kann nach dem ersten erfolgreichen Online-Aufruf auch ohne Empfang genutzt werden.
+- Vor dem Übungsplatz die Website einmal mit Internet öffnen, damit alle Dateien gespeichert werden.
+- Auf dem iPad am besten über Safari öffnen und zum Home-Bildschirm hinzufügen.
+- Danach kann die App auch nach Bildschirm aus/an wieder gestartet werden.
+- Nach Änderungen an Fragen oder Code die Website einmal mit Internet neu öffnen, damit die neue Version gespeichert wird.
+
 Diese Version behebt:
 - Syntax-Fehler in app.js
 - Ergebnisanzeige für Liegestütze/Kniebeugen
