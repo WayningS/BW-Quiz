@@ -72,6 +72,13 @@ h2 {
   line-height: 1.45;
 }
 
+.ready-text {
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.45;
+  margin: 0 0 24px;
+}
+
 .info-box {
   margin: 24px 0;
   padding: 16px;
@@ -120,7 +127,8 @@ button:active {
   overflow: hidden;
 }
 
-#progress-fill {
+#progress-fill,
+#ready-progress-fill {
   height: 100%;
   width: 0%;
   background: var(--accent);

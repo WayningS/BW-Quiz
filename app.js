@@ -15,12 +15,19 @@ let timeLeft = QUESTION_TIME;
 let questionResolved = false;
 
 const startScreen = document.getElementById("start-screen");
+const readyScreen = document.getElementById("ready-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
 
 const startBtn = document.getElementById("start-btn");
+const readyBtn = document.getElementById("ready-btn");
 const restartBtn = document.getElementById("restart-btn");
 const nextBtn = document.getElementById("next-btn");
+
+const readyTitle = document.getElementById("ready-title");
+const readyProgress = document.getElementById("ready-progress");
+const readyScore = document.getElementById("ready-score");
+const readyProgressFill = document.getElementById("ready-progress-fill");
 
 const progressEl = document.getElementById("progress");
 const scoreEl = document.getElementById("score");
@@ -64,6 +71,7 @@ function shuffle(array) {
 
 function showScreen(screen) {
   startScreen.classList.add("hidden");
+  readyScreen.classList.add("hidden");
   quizScreen.classList.add("hidden");
   resultScreen.classList.add("hidden");
   screen.classList.remove("hidden");
@@ -88,6 +96,21 @@ function startQuiz() {
     return;
   }
 
+  showReadyScreen();
+}
+
+function showReadyScreen() {
+  stopQuestionTimer();
+
+  readyTitle.textContent = `Soldat ${currentIndex + 1} bereit?`;
+  readyProgress.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
+  readyScore.textContent = `${correctCount} richtig`;
+  readyProgressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
+
+  showScreen(readyScreen);
+}
+
+function showCurrentQuestion() {
   showScreen(quizScreen);
   renderQuestion();
 }
@@ -108,6 +131,7 @@ function renderQuestion() {
   feedbackEl.textContent = "";
   penaltyBox.classList.add("hidden");
   nextBtn.classList.add("hidden");
+  nextBtn.textContent = currentIndex + 1 >= TOTAL_QUESTIONS ? "Ergebnis anzeigen" : "Nächster Soldat";
 
   if (jokerBox) jokerBox.classList.remove("hidden");
   if (jokerChoice) jokerChoice.classList.add("hidden");
@@ -298,7 +322,7 @@ function nextQuestion() {
   if (currentIndex >= TOTAL_QUESTIONS) {
     showResults();
   } else {
-    renderQuestion();
+    showReadyScreen();
   }
 }
 
@@ -356,6 +380,7 @@ if (jokerBtn) {
 }
 
 startBtn.addEventListener("click", startQuiz);
+readyBtn.addEventListener("click", showCurrentQuestion);
 restartBtn.addEventListener("click", resetToStartScreen);
 nextBtn.addEventListener("click", nextQuestion);
 
