@@ -5,7 +5,7 @@ const THEME_STORAGE_KEY = "bwQuizTheme";
 const THEMES = {
   exhibition: {
     bodyClass: "theme-exhibition",
-    buttonText: "Design: Ausstellung",
+    buttonText: "Design: Feldjägerregiment 2",
     themeColor: "#111111"
   },
   classic: {
