@@ -97,6 +97,10 @@ function shuffle(array) {
   return [...array].sort(() => Math.random() - 0.5);
 }
 
+function formatPoints(points) {
+  return `${points} ${points === 1 ? "Punkt" : "Punkte"}`;
+}
+
 function showScreen(screen) {
   introScreen.classList.add("hidden");
   startScreen.classList.add("hidden");
@@ -186,7 +190,7 @@ function showReadyScreen() {
 
   readyTitle.textContent = `Soldat ${currentIndex + 1} bereit?`;
   readyProgress.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
-  readyScore.textContent = `${correctCount} richtig`;
+  readyScore.textContent = formatPoints(correctCount);
   readyProgressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
   showScreen(readyScreen);
@@ -204,7 +208,7 @@ function renderQuestion() {
   questionResolved = false;
 
   progressEl.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
-  scoreEl.textContent = `${correctCount} richtig`;
+  scoreEl.textContent = formatPoints(correctCount);
   progressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
   questionEl.textContent = q.frage;
@@ -395,7 +399,7 @@ function answerQuestion(selected) {
     penaltyBox.classList.remove("hidden");
   }
 
-  scoreEl.textContent = `${correctCount} richtig`;
+  scoreEl.textContent = formatPoints(correctCount);
 }
 
 document.querySelectorAll("[data-penalty]").forEach((btn) => {

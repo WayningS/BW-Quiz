@@ -1,4 +1,4 @@
-const CACHE_NAME = "bw-quiz-offline-v8";
+const CACHE_NAME = "bw-quiz-offline-v9";
 const APP_ASSETS = [
   "./",
   "./index.html",
