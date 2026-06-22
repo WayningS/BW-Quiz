@@ -29,11 +29,13 @@ let timeLeft = QUESTION_TIME;
 let questionResolved = false;
 let offlineReady = false;
 
+const introScreen = document.getElementById("intro-screen");
 const startScreen = document.getElementById("start-screen");
 const readyScreen = document.getElementById("ready-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
 
+const introStartBtn = document.getElementById("intro-start-btn");
 const startBtn = document.getElementById("start-btn");
 const readyBtn = document.getElementById("ready-btn");
 const restartBtn = document.getElementById("restart-btn");
@@ -66,7 +68,6 @@ const timerWrapper = document.getElementById("timer-wrapper");
 const timerSeconds = document.getElementById("timer-seconds");
 const timerRing = document.getElementById("timer-ring");
 const connectionStatus = document.getElementById("connection-status");
-const questionVersion = document.getElementById("question-version");
 const themeToggle = document.getElementById("theme-toggle");
 const themeColorMeta = document.querySelector("meta[name='theme-color']");
 
@@ -84,17 +85,12 @@ async function loadQuestions() {
 
   const data = await response.json();
   const questionData = Array.isArray(data) ? data : data.fragen;
-  const version = Array.isArray(data) ? "ohne Angabe" : data.version || "ohne Angabe";
-
   if (!Array.isArray(questionData)) {
     throw new Error("fragen.json hat kein gültiges Fragenformat.");
   }
 
   allQuestions = questionData.filter((question) => question.aktiv !== false);
 
-  if (questionVersion) {
-    questionVersion.textContent = `Fragen-Version: ${version}`;
-  }
 }
 
 function shuffle(array) {
@@ -102,6 +98,7 @@ function shuffle(array) {
 }
 
 function showScreen(screen) {
+  introScreen.classList.add("hidden");
   startScreen.classList.add("hidden");
   readyScreen.classList.add("hidden");
   quizScreen.classList.add("hidden");
@@ -455,13 +452,14 @@ function resetToStartScreen() {
   penalties = [];
   jokerPenalties = [];
   quizQuestions = [];
-  showScreen(startScreen);
+  showScreen(introScreen);
 }
 
 if (jokerBtn) {
   jokerBtn.addEventListener("click", useJoker);
 }
 
+introStartBtn.addEventListener("click", () => showScreen(startScreen));
 startBtn.addEventListener("click", startQuiz);
 readyBtn.addEventListener("click", showCurrentQuestion);
 restartBtn.addEventListener("click", confirmResetToStartScreen);

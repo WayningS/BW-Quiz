@@ -19,7 +19,74 @@
   </header>
 
   <main class="app">
-    <section id="start-screen" class="card">
+    <section id="intro-screen" class="card intro-card">
+      <div class="intro-layout">
+        <div class="intro-copy">
+          <div class="unit-mark intro-unit-mark" aria-hidden="true">
+            <div class="flag-band">
+              <i></i>
+              <i></i>
+              <i></i>
+            </div>
+            <span>FJg</span>
+            <strong>2</strong>
+          </div>
+          <h1>Einsatzraum Wildflecken</h1>
+          <p class="lead">Station: Bundeswehr Quiz</p>
+          <button id="intro-start-btn" class="primary">Zum Bundeswehr Quiz</button>
+        </div>
+
+        <div class="mission-map" aria-label="Stilisierte Karte Einsatzraum Wildflecken">
+          <div class="map-label">Einsatzraum Wildflecken</div>
+          <svg viewBox="0 0 520 420" role="img" aria-labelledby="map-title">
+            <title id="map-title">Stilisierte Lagekarte mit markierter Quizstation</title>
+            <defs>
+              <pattern id="map-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+                <path d="M 44 0 L 0 0 0 44" fill="none" stroke="currentColor" stroke-width="1" opacity=".18"/>
+              </pattern>
+              <linearGradient id="map-shine" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="white" stop-opacity=".36"/>
+                <stop offset=".36" stop-color="white" stop-opacity=".12"/>
+                <stop offset=".37" stop-color="white" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <rect class="map-bg" x="0" y="0" width="520" height="420" rx="26"/>
+            <rect class="map-grid" x="18" y="18" width="484" height="384"/>
+            <g class="contours">
+              <path d="M18 84 C72 110 102 28 160 58 C218 88 240 110 292 78 C344 44 382 86 428 104 C464 118 484 86 502 72"/>
+              <path d="M20 132 C80 88 128 152 172 116 C220 78 268 92 314 136 C366 188 420 78 504 124"/>
+              <path d="M18 188 C86 232 136 160 196 192 C246 218 278 176 326 188 C372 198 404 242 502 202"/>
+              <path d="M18 248 C84 304 140 220 204 246 C260 270 304 222 356 244 C418 270 454 304 504 260"/>
+              <path d="M18 314 C76 286 112 334 172 308 C226 286 260 324 310 302 C366 276 396 344 504 318"/>
+              <path d="M18 366 C84 390 130 344 190 362 C256 384 314 348 364 372 C414 394 452 352 504 366"/>
+            </g>
+            <g class="terrain-lines">
+              <path d="M110 28 C88 74 136 106 116 158 C96 208 122 248 172 258 C218 268 242 300 226 358"/>
+              <path d="M250 22 C262 70 230 112 260 154 C288 194 284 236 254 276 C224 316 250 360 302 394"/>
+              <path d="M388 28 C368 88 420 126 398 182 C378 236 398 280 440 306 C472 326 460 362 430 396"/>
+            </g>
+            <path class="route route-shadow" d="M76 348 L136 292 L190 242 L222 180 L288 138 L326 82 L426 30"/>
+            <path class="route" d="M76 348 L136 292 L190 242 L222 180 L288 138 L326 82 L426 30"/>
+            <g class="station-marker" transform="translate(288 138)">
+              <circle r="31"/>
+              <circle r="10"/>
+            </g>
+            <text class="station-text" x="328" y="152">STATION</text>
+            <text class="station-text" x="328" y="174">QUIZ</text>
+            <g class="north">
+              <text x="454" y="72">N</text>
+              <path d="M454 92 L438 135 L454 124 L470 135 Z"/>
+              <path d="M454 93 L454 154"/>
+            </g>
+            <text class="map-foot" x="26" y="386">50.378 N / 9.913 E</text>
+            <text class="map-foot map-place" x="396" y="386">Wildflecken</text>
+            <path class="map-shine" d="M346 0 H520 V128 L392 420 H294 Z"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section id="start-screen" class="card hidden">
       <div class="unit-lockup">
         <div class="unit-mark" aria-hidden="true">
           <div class="flag-band">
@@ -139,7 +206,6 @@
   <div class="app-corner" aria-live="polite">
     <button id="theme-toggle" class="theme-toggle" type="button">Design: Feldjägerregiment 2</button>
     <span id="connection-status">Online</span>
-    <span id="question-version">Fragen-Version: lädt...</span>
     <span>Entwickelt von Ubi</span>
   </div>
 
