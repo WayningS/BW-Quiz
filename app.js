@@ -6,7 +6,7 @@ const THEMES = {
   exhibition: {
     bodyClass: "theme-exhibition",
     buttonText: "Design: Feldjägerregiment 2",
-    themeColor: "#111111"
+    themeColor: "#141e24"
   },
   classic: {
     bodyClass: "theme-classic",

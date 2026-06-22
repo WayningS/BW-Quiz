@@ -3,8 +3,8 @@
   "short_name": "BW Quiz",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f0e6",
-  "theme_color": "#111111",
+  "background_color": "#ff711f",
+  "theme_color": "#141e24",
   "description": "Inoffizielle Quizstation mit zwei Designs, 10 Fragen und Endauswertung.",
   "icons": [
     {
