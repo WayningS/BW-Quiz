@@ -577,14 +577,6 @@ button:active {
   letter-spacing: .08em;
 }
 
-.group-chip {
-  max-width: 100%;
-  padding: 6px 10px;
-  background: rgba(255, 255, 255, .055);
-  border: 1px solid var(--line);
-  color: var(--gold);
-}
-
 .progressbar {
   height: 11px;
   margin-top: 14px;
@@ -1255,13 +1247,6 @@ button:active {
   font-weight: 700;
   text-transform: none;
   letter-spacing: 0;
-}
-
-.theme-classic .group-chip {
-  border: 1px solid rgba(143, 175, 114, .34);
-  border-radius: 999px;
-  background: rgba(143, 175, 114, .12);
-  color: var(--accent);
 }
 
 .theme-classic .progressbar {

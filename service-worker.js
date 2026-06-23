@@ -1,4 +1,5 @@
-const CACHE_NAME = "bw-quiz-scoreboard-test-v2";
+const CACHE_NAME = "bw-quiz-scoreboard-test-v4";
+const NETWORK_TIMEOUT_MS = 3000;
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -54,15 +55,19 @@ self.addEventListener("fetch", (event) => {
 
 async function networkFirst(request, cacheKey) {
   const cache = await caches.open(CACHE_NAME);
-
-  try {
-    const response = await fetch(request);
-
+  const networkResponse = fetch(request).then(async (response) => {
     if (response && response.ok) {
       await cache.put(cacheKey, response.clone());
     }
 
     return response;
+  });
+
+  networkResponse.catch(() => {});
+  const timeout = timeoutAfter(NETWORK_TIMEOUT_MS);
+
+  try {
+    return await Promise.race([networkResponse, timeout.promise]);
   } catch (error) {
     const cachedResponse = await cache.match(cacheKey);
     if (cachedResponse) return cachedResponse;
@@ -72,6 +77,21 @@ async function networkFirst(request, cacheKey) {
       if (requestCache) return requestCache;
     }
 
-    throw error;
+    return networkResponse;
+  } finally {
+    timeout.cancel();
   }
+}
+
+function timeoutAfter(milliseconds) {
+  let timeoutId;
+
+  return {
+    promise: new Promise((resolve, reject) => {
+      timeoutId = setTimeout(() => reject(new Error("network-timeout")), milliseconds);
+    }),
+    cancel() {
+      clearTimeout(timeoutId);
+    }
+  };
 }

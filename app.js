@@ -3,6 +3,15 @@ const QUESTION_TIME = 60;
 const TIMER_WARNING_TIME = 10;
 const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
+const OFFLINE_ASSETS = [
+  "./",
+  "./index.html",
+  "./style.css",
+  "./app.js",
+  "./fragen.json",
+  "./manifest.webmanifest",
+  "./icon.svg"
+];
 const THEMES = {
   exhibition: {
     bodyClass: "theme-exhibition",
@@ -52,12 +61,10 @@ const groupNameInput = document.getElementById("group-name");
 
 const readyTitle = document.getElementById("ready-title");
 const readyProgress = document.getElementById("ready-progress");
-const readyGroup = document.getElementById("ready-group");
 const readyScore = document.getElementById("ready-score");
 const readyProgressFill = document.getElementById("ready-progress-fill");
 
 const progressEl = document.getElementById("progress");
-const quizGroup = document.getElementById("quiz-group");
 const scoreEl = document.getElementById("score");
 const progressFill = document.getElementById("progress-fill");
 const questionEl = document.getElementById("question");
@@ -143,8 +150,10 @@ function getScoreboardEntries() {
 function saveScoreboardEntries(entries) {
   try {
     localStorage.setItem(SCOREBOARD_STORAGE_KEY, JSON.stringify(entries));
+    return true;
   } catch (error) {
     console.error("Scoreboard konnte nicht gespeichert werden.", error);
+    return false;
   }
 }
 
@@ -182,7 +191,8 @@ function saveCurrentResult(wrong, pushups, squats) {
     squats,
     createdAt: new Date().toISOString()
   });
-  saveScoreboardEntries(entries);
+  if (!saveScoreboardEntries(entries)) return false;
+
   resultSavedForCurrentRun = true;
   return true;
 }
@@ -245,7 +255,11 @@ function clearScoreboard() {
   const shouldDelete = confirm("Willst du es wirklich löschen?");
   if (!shouldDelete) return;
 
-  saveScoreboardEntries([]);
+  if (!saveScoreboardEntries([])) {
+    alert("Scoreboard konnte nicht gelöscht werden. Prüfe den Browser-Speicher.");
+    return;
+  }
+
   renderScoreboard();
 }
 
@@ -257,7 +271,11 @@ function deleteScoreboardEntry(entryId) {
   const shouldDelete = confirm(`Eintrag "${entry.groupName}" wirklich löschen?`);
   if (!shouldDelete) return;
 
-  saveScoreboardEntries(entries.filter((item) => item.id !== entryId));
+  if (!saveScoreboardEntries(entries.filter((item) => item.id !== entryId))) {
+    alert("Eintrag konnte nicht gelöscht werden. Prüfe den Browser-Speicher.");
+    return;
+  }
+
   renderScoreboard();
 }
 
@@ -269,15 +287,6 @@ function showScreen(screen) {
   resultScreen.classList.add("hidden");
   scoreboardScreen.classList.add("hidden");
   screen.classList.remove("hidden");
-}
-
-function updateGroupLabels() {
-  [readyGroup, quizGroup].forEach((element) => {
-    if (!element) return;
-
-    element.textContent = currentGroupName ? `Gruppe: ${currentGroupName}` : "Testdurchgang";
-    element.classList.toggle("hidden", false);
-  });
 }
 
 function setAnswerButtonsLocked(locked) {
@@ -340,6 +349,37 @@ function updateConnectionStatus() {
   connectionStatus.classList.toggle("is-ready", offlineReady);
 }
 
+async function requestPersistentStorage() {
+  if (!navigator.storage || !navigator.storage.persist) return false;
+
+  try {
+    if (navigator.storage.persisted && await navigator.storage.persisted()) return true;
+    return await navigator.storage.persist();
+  } catch (error) {
+    return false;
+  }
+}
+
+async function verifyOfflineCache() {
+  if (!("caches" in window)) return false;
+
+  try {
+    const cachedAssets = await Promise.all(
+      OFFLINE_ASSETS.map((asset) => caches.match(new URL(asset, window.location.href).href))
+    );
+
+    return cachedAssets.every(Boolean);
+  } catch (error) {
+    return false;
+  }
+}
+
+async function prepareOfflineMode() {
+  await requestPersistentStorage();
+  offlineReady = await verifyOfflineCache();
+  updateConnectionStatus();
+}
+
 function startQuiz() {
   currentGroupName = getEnteredGroupName();
   resultSavedForCurrentRun = false;
@@ -370,7 +410,6 @@ function showReadyScreen() {
   readyTitle.textContent = `Soldat ${currentIndex + 1} bereit?`;
   readyProgress.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   readyScore.textContent = formatPoints(correctCount);
-  updateGroupLabels();
   readyProgressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
   showScreen(readyScreen);
@@ -389,7 +428,6 @@ function renderQuestion() {
 
   progressEl.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   scoreEl.textContent = formatPoints(correctCount);
-  updateGroupLabels();
   progressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
   questionEl.textContent = q.frage;
@@ -622,9 +660,13 @@ function showResults() {
   const savedToScoreboard = saveCurrentResult(wrong, totalPushupCount, totalSquatCount);
 
   if (resultGroup) {
-    resultGroup.textContent = savedToScoreboard
-      ? `Gespeichert im Scoreboard: ${currentGroupName}`
-      : "Ohne Gruppenname - dieser Durchgang wurde nicht gespeichert.";
+    if (savedToScoreboard) {
+      resultGroup.textContent = `Gespeichert im Scoreboard: ${currentGroupName}`;
+    } else if (currentGroupName) {
+      resultGroup.textContent = "Scoreboard konnte nicht gespeichert werden. Prüfe den Browser-Speicher.";
+    } else {
+      resultGroup.textContent = "Ohne Gruppenname - dieser Durchgang wurde nicht gespeichert.";
+    }
   }
 
   showScreen(resultScreen);
@@ -681,10 +723,7 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("./service-worker.js")
       .then((registration) => registration.update())
       .then(() => navigator.serviceWorker.ready)
-      .then(() => {
-        offlineReady = true;
-        updateConnectionStatus();
-      })
+      .then(() => prepareOfflineMode())
       .catch((error) => console.error("Service Worker konnte nicht registriert werden.", error));
   });
 }
