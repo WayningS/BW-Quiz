@@ -33,7 +33,14 @@
           </div>
           <h1>Einsatzraum Wildflecken</h1>
           <p class="lead">Station: Bundeswehr Quiz</p>
-          <button id="intro-start-btn" class="primary">Zum Bundeswehr Quiz</button>
+          <label class="group-entry" for="group-name">
+            <span>Gruppe / Team</span>
+            <input id="group-name" type="text" maxlength="40" autocomplete="off" placeholder="z.B. Gruppe 1">
+          </label>
+          <div class="button-row">
+            <button id="intro-start-btn" class="primary">Zum Bundeswehr Quiz</button>
+            <button id="intro-scoreboard-btn" class="secondary" type="button">Scoreboard anzeigen</button>
+          </div>
         </div>
 
         <div class="mission-map" aria-label="Stilisierte Karte Einsatzraum Wildflecken">
@@ -190,6 +197,7 @@
     <section id="result-screen" class="card hidden">
       <div class="badge">Station abgeschlossen</div>
       <h1>Ergebnis</h1>
+      <p id="result-group" class="result-note"></p>
       <div class="result-grid">
         <div><span id="result-score">0/10</span><small>Stationspunkte</small></div>
         <div><span id="result-wrong">0</span><small>Falsch</small></div>
@@ -199,7 +207,22 @@
         <div><span id="total-pushups">0</span><small>Liegestütze gesamt</small></div>
         <div><span id="total-squats">0</span><small>Kniebeugen gesamt</small></div>
       </div>
-      <button id="restart-btn" class="primary">Zur Startseite</button>
+      <div class="button-row">
+        <button id="scoreboard-btn" class="primary" type="button">Scoreboard anzeigen</button>
+        <button id="restart-btn" class="secondary" type="button">Zur Startseite</button>
+      </div>
+    </section>
+
+    <section id="scoreboard-screen" class="card scoreboard-card hidden">
+      <div class="badge">Stationswertung</div>
+      <h1>Scoreboard</h1>
+      <p class="result-note">Gespeichert werden nur Durchgänge mit eingetragenem Gruppenname.</p>
+      <div id="scoreboard-list" class="scoreboard-list"></div>
+      <p id="scoreboard-empty" class="scoreboard-empty hidden">Noch kein gespeicherter Durchgang.</p>
+      <div class="button-row">
+        <button id="scoreboard-back-btn" class="primary" type="button">Zur Startseite</button>
+        <button id="scoreboard-clear-btn" class="secondary danger" type="button">Scoreboard löschen</button>
+      </div>
     </section>
   </main>
 

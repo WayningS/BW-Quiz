@@ -2,6 +2,7 @@ const TOTAL_QUESTIONS = 10;
 const QUESTION_TIME = 60;
 const TIMER_WARNING_TIME = 10;
 const THEME_STORAGE_KEY = "bwQuizTheme";
+const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const THEMES = {
   exhibition: {
     bodyClass: "theme-exhibition",
@@ -28,18 +29,26 @@ let timerInterval = null;
 let timeLeft = QUESTION_TIME;
 let questionResolved = false;
 let offlineReady = false;
+let currentGroupName = "";
+let resultSavedForCurrentRun = false;
 
 const introScreen = document.getElementById("intro-screen");
 const startScreen = document.getElementById("start-screen");
 const readyScreen = document.getElementById("ready-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
+const scoreboardScreen = document.getElementById("scoreboard-screen");
 
 const introStartBtn = document.getElementById("intro-start-btn");
+const introScoreboardBtn = document.getElementById("intro-scoreboard-btn");
 const startBtn = document.getElementById("start-btn");
 const readyBtn = document.getElementById("ready-btn");
 const restartBtn = document.getElementById("restart-btn");
 const nextBtn = document.getElementById("next-btn");
+const scoreboardBtn = document.getElementById("scoreboard-btn");
+const scoreboardBackBtn = document.getElementById("scoreboard-back-btn");
+const scoreboardClearBtn = document.getElementById("scoreboard-clear-btn");
+const groupNameInput = document.getElementById("group-name");
 
 const readyTitle = document.getElementById("ready-title");
 const readyProgress = document.getElementById("ready-progress");
@@ -61,8 +70,11 @@ const jokerChoice = document.getElementById("joker-choice");
 
 const resultScore = document.getElementById("result-score");
 const resultWrong = document.getElementById("result-wrong");
+const resultGroup = document.getElementById("result-group");
 const totalPushups = document.getElementById("total-pushups");
 const totalSquats = document.getElementById("total-squats");
+const scoreboardList = document.getElementById("scoreboard-list");
+const scoreboardEmpty = document.getElementById("scoreboard-empty");
 
 const timerWrapper = document.getElementById("timer-wrapper");
 const timerSeconds = document.getElementById("timer-seconds");
@@ -101,12 +113,128 @@ function formatPoints(points) {
   return `${points} ${points === 1 ? "Punkt" : "Punkte"}`;
 }
 
+function getEnteredGroupName() {
+  return groupNameInput ? groupNameInput.value.trim() : "";
+}
+
+function getScoreboardEntries() {
+  try {
+    const stored = localStorage.getItem(SCOREBOARD_STORAGE_KEY);
+    const entries = stored ? JSON.parse(stored) : [];
+    return Array.isArray(entries) ? entries : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveScoreboardEntries(entries) {
+  try {
+    localStorage.setItem(SCOREBOARD_STORAGE_KEY, JSON.stringify(entries));
+  } catch (error) {
+    console.error("Scoreboard konnte nicht gespeichert werden.", error);
+  }
+}
+
+function formatDateTime(value) {
+  try {
+    return new Intl.DateTimeFormat("de-DE", {
+      day: "2-digit",
+      month: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    }).format(new Date(value));
+  } catch (error) {
+    return "";
+  }
+}
+
+function formatExerciseSummary(entry) {
+  const exercises = [];
+  if (entry.pushups > 0) exercises.push(`${entry.pushups} Liegestütze`);
+  if (entry.squats > 0) exercises.push(`${entry.squats} Kniebeugen`);
+  return exercises.length ? exercises.join(" / ") : "Keine Übungen";
+}
+
+function saveCurrentResult(wrong, pushups, squats) {
+  if (!currentGroupName || resultSavedForCurrentRun) return false;
+
+  const entries = getScoreboardEntries();
+  entries.push({
+    id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    groupName: currentGroupName,
+    points: correctCount,
+    wrong,
+    pushups,
+    squats,
+    createdAt: new Date().toISOString()
+  });
+  saveScoreboardEntries(entries);
+  resultSavedForCurrentRun = true;
+  return true;
+}
+
+function renderScoreboard() {
+  const entries = getScoreboardEntries().sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    return new Date(a.createdAt) - new Date(b.createdAt);
+  });
+
+  scoreboardList.innerHTML = "";
+  scoreboardEmpty.classList.toggle("hidden", entries.length > 0);
+
+  let rank = 0;
+  let lastPoints = null;
+  entries.forEach((entry) => {
+    if (entry.points !== lastPoints) {
+      rank += 1;
+      lastPoints = entry.points;
+    }
+
+    const row = document.createElement("div");
+    row.className = "scoreboard-row";
+
+    const rankEl = document.createElement("div");
+    rankEl.className = "scoreboard-rank";
+    rankEl.textContent = `${rank}.`;
+
+    const body = document.createElement("div");
+    body.className = "scoreboard-body";
+
+    const name = document.createElement("strong");
+    name.textContent = entry.groupName;
+
+    const meta = document.createElement("span");
+    meta.textContent = `${entry.points}/${TOTAL_QUESTIONS} Punkte · ${entry.wrong} falsch · ${formatExerciseSummary(entry)}`;
+
+    const time = document.createElement("small");
+    time.textContent = formatDateTime(entry.createdAt);
+
+    body.append(name, meta, time);
+    row.append(rankEl, body);
+    scoreboardList.appendChild(row);
+  });
+}
+
+function showScoreboard() {
+  renderScoreboard();
+  showScreen(scoreboardScreen);
+}
+
+function clearScoreboard() {
+  const shouldDelete = confirm("Willst du es wirklich löschen?");
+  if (!shouldDelete) return;
+
+  saveScoreboardEntries([]);
+  renderScoreboard();
+}
+
 function showScreen(screen) {
   introScreen.classList.add("hidden");
   startScreen.classList.add("hidden");
   readyScreen.classList.add("hidden");
   quizScreen.classList.add("hidden");
   resultScreen.classList.add("hidden");
+  scoreboardScreen.classList.add("hidden");
   screen.classList.remove("hidden");
 }
 
@@ -171,6 +299,8 @@ function updateConnectionStatus() {
 }
 
 function startQuiz() {
+  currentGroupName = getEnteredGroupName();
+  resultSavedForCurrentRun = false;
   currentIndex = 0;
   correctCount = 0;
   penalties = [];
@@ -438,6 +568,13 @@ function showResults() {
 
   totalPushups.textContent = totalPushupCount.toString();
   totalSquats.textContent = totalSquatCount.toString();
+  const savedToScoreboard = saveCurrentResult(wrong, totalPushupCount, totalSquatCount);
+
+  if (resultGroup) {
+    resultGroup.textContent = savedToScoreboard
+      ? `Gespeichert im Scoreboard: ${currentGroupName}`
+      : "Ohne Gruppenname - dieser Durchgang wurde nicht gespeichert.";
+  }
 
   showScreen(resultScreen);
 }
@@ -456,6 +593,9 @@ function resetToStartScreen() {
   penalties = [];
   jokerPenalties = [];
   quizQuestions = [];
+  currentGroupName = "";
+  resultSavedForCurrentRun = false;
+  if (groupNameInput) groupNameInput.value = "";
   showScreen(introScreen);
 }
 
@@ -464,10 +604,14 @@ if (jokerBtn) {
 }
 
 introStartBtn.addEventListener("click", () => showScreen(startScreen));
+introScoreboardBtn.addEventListener("click", showScoreboard);
 startBtn.addEventListener("click", startQuiz);
 readyBtn.addEventListener("click", showCurrentQuestion);
 restartBtn.addEventListener("click", confirmResetToStartScreen);
 nextBtn.addEventListener("click", nextQuestion);
+scoreboardBtn.addEventListener("click", showScoreboard);
+scoreboardBackBtn.addEventListener("click", resetToStartScreen);
+scoreboardClearBtn.addEventListener("click", clearScoreboard);
 if (themeToggle) {
   themeToggle.addEventListener("click", toggleTheme);
 }

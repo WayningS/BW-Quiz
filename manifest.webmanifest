@@ -1,11 +1,11 @@
 {
-  "name": "Übungsplatz Wildflecken Bundeswehr Quiz",
-  "short_name": "BW Quiz",
+  "name": "Übungsplatz Wildflecken Bundeswehr Quiz Scoreboard",
+  "short_name": "BW Score",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ff711f",
   "theme_color": "#141e24",
-  "description": "Inoffizielle Quizstation mit zwei Designs, 10 Fragen und Endauswertung.",
+  "description": "Inoffizielle Quizstation mit zwei Designs, 10 Fragen, Endauswertung und lokalem Scoreboard.",
   "icons": [
     {
       "src": "icon.svg",
