@@ -1,4 +1,4 @@
-const CACHE_NAME = "bw-quiz-scoreboard-test-v4";
+const CACHE_NAME = "bw-quiz-scoreboard-test-v6";
 const NETWORK_TIMEOUT_MS = 3000;
 const APP_ASSETS = [
   "./",

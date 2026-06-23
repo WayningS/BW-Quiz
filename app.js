@@ -40,6 +40,8 @@ let questionResolved = false;
 let offlineReady = false;
 let currentGroupName = "";
 let resultSavedForCurrentRun = false;
+let activeScreen = null;
+let operatorReturnScreen = null;
 
 const introScreen = document.getElementById("intro-screen");
 const startScreen = document.getElementById("start-screen");
@@ -47,6 +49,7 @@ const readyScreen = document.getElementById("ready-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const resultScreen = document.getElementById("result-screen");
 const scoreboardScreen = document.getElementById("scoreboard-screen");
+const operatorScreen = document.getElementById("operator-screen");
 
 const introStartBtn = document.getElementById("intro-start-btn");
 const introScoreboardBtn = document.getElementById("intro-scoreboard-btn");
@@ -57,6 +60,12 @@ const nextBtn = document.getElementById("next-btn");
 const scoreboardBtn = document.getElementById("scoreboard-btn");
 const scoreboardBackBtn = document.getElementById("scoreboard-back-btn");
 const scoreboardClearBtn = document.getElementById("scoreboard-clear-btn");
+const operatorBtn = document.getElementById("operator-btn");
+const operatorThemeBtn = document.getElementById("operator-theme-btn");
+const operatorScoreboardBtn = document.getElementById("operator-scoreboard-btn");
+const operatorClearScoreboardBtn = document.getElementById("operator-clear-scoreboard-btn");
+const operatorResetBtn = document.getElementById("operator-reset-btn");
+const operatorBackBtn = document.getElementById("operator-back-btn");
 const groupNameInput = document.getElementById("group-name");
 
 const readyTitle = document.getElementById("ready-title");
@@ -89,7 +98,6 @@ const timerWrapper = document.getElementById("timer-wrapper");
 const timerSeconds = document.getElementById("timer-seconds");
 const timerRing = document.getElementById("timer-ring");
 const connectionStatus = document.getElementById("connection-status");
-const themeToggle = document.getElementById("theme-toggle");
 const themeColorMeta = document.querySelector("meta[name='theme-color']");
 
 const CIRCLE_RADIUS = 80;
@@ -286,7 +294,22 @@ function showScreen(screen) {
   quizScreen.classList.add("hidden");
   resultScreen.classList.add("hidden");
   scoreboardScreen.classList.add("hidden");
+  operatorScreen.classList.add("hidden");
   screen.classList.remove("hidden");
+  activeScreen = screen;
+}
+
+function openOperatorScreen() {
+  if (activeScreen !== operatorScreen) {
+    operatorReturnScreen = activeScreen || introScreen;
+  }
+
+  showScreen(operatorScreen);
+}
+
+function closeOperatorScreen() {
+  showScreen(operatorReturnScreen || introScreen);
+  operatorReturnScreen = null;
 }
 
 function setAnswerButtonsLocked(locked) {
@@ -320,8 +343,8 @@ function applyTheme(themeName) {
   document.body.classList.add(theme.bodyClass);
   document.body.dataset.theme = selectedTheme;
 
-  if (themeToggle) {
-    themeToggle.textContent = theme.buttonText;
+  if (operatorThemeBtn) {
+    operatorThemeBtn.textContent = theme.buttonText;
   }
 
   if (themeColorMeta) {
@@ -705,8 +728,13 @@ nextBtn.addEventListener("click", nextQuestion);
 scoreboardBtn.addEventListener("click", showScoreboard);
 scoreboardBackBtn.addEventListener("click", resetToStartScreen);
 scoreboardClearBtn.addEventListener("click", clearScoreboard);
-if (themeToggle) {
-  themeToggle.addEventListener("click", toggleTheme);
+operatorBtn.addEventListener("click", openOperatorScreen);
+operatorScoreboardBtn.addEventListener("click", showScoreboard);
+operatorClearScoreboardBtn.addEventListener("click", clearScoreboard);
+operatorResetBtn.addEventListener("click", confirmResetToStartScreen);
+operatorBackBtn.addEventListener("click", closeOperatorScreen);
+if (operatorThemeBtn) {
+  operatorThemeBtn.addEventListener("click", toggleTheme);
 }
 window.addEventListener("online", updateConnectionStatus);
 window.addEventListener("offline", updateConnectionStatus);

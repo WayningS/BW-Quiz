@@ -51,6 +51,9 @@
               <pattern id="map-grid" width="44" height="44" patternUnits="userSpaceOnUse">
                 <path d="M 44 0 L 0 0 0 44" fill="none" stroke="currentColor" stroke-width="1" opacity=".18"/>
               </pattern>
+              <pattern id="map-grid-major" width="88" height="88" patternUnits="userSpaceOnUse">
+                <path d="M 88 0 L 0 0 0 88" fill="none" stroke="currentColor" stroke-width="1.8" opacity=".34"/>
+              </pattern>
               <linearGradient id="map-shine" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="white" stop-opacity=".36"/>
                 <stop offset=".36" stop-color="white" stop-opacity=".12"/>
@@ -59,6 +62,18 @@
             </defs>
             <rect class="map-bg" x="0" y="0" width="520" height="420" rx="26"/>
             <rect class="map-grid" x="18" y="18" width="484" height="384"/>
+            <rect class="map-grid-major" x="18" y="18" width="484" height="384"/>
+            <g class="map-grid-labels">
+              <text x="36" y="43">A1</text>
+              <text x="124" y="43">B1</text>
+              <text x="212" y="43">C1</text>
+              <text x="300" y="43">D1</text>
+              <text x="388" y="43">E1</text>
+              <text x="470" y="43">F1</text>
+              <text x="28" y="128">02</text>
+              <text x="28" y="216">03</text>
+              <text x="28" y="304">04</text>
+            </g>
             <g class="contours">
               <path d="M18 84 C72 110 102 28 160 58 C218 88 240 110 292 78 C344 44 382 86 428 104 C464 118 484 86 502 72"/>
               <path d="M20 132 C80 88 128 152 172 116 C220 78 268 92 314 136 C366 188 420 78 504 124"/>
@@ -72,14 +87,46 @@
               <path d="M250 22 C262 70 230 112 260 154 C288 194 284 236 254 276 C224 316 250 360 302 394"/>
               <path d="M388 28 C368 88 420 126 398 182 C378 236 398 280 440 306 C472 326 460 362 430 396"/>
             </g>
+            <g class="map-areas">
+              <path d="M58 318 L126 256 L190 276 L174 350 L96 374 Z"/>
+              <path d="M322 70 L432 44 L476 112 L410 162 L332 132 Z"/>
+            </g>
             <path class="route route-shadow" d="M76 348 L136 292 L190 242 L222 180 L288 138 L326 82 L426 30"/>
             <path class="route" d="M76 348 L136 292 L190 242 L222 180 L288 138 L326 82 L426 30"/>
+            <g class="map-symbols">
+              <g class="tactical-symbol start-point" transform="translate(76 348)">
+                <path d="M0 -19 L20 0 L0 19 L-20 0 Z"/>
+                <text x="0" y="6">SP</text>
+              </g>
+              <g class="tactical-symbol" transform="translate(136 292)">
+                <rect x="-21" y="-15" width="42" height="30"/>
+                <path d="M-21 0 H21"/>
+                <text x="0" y="7">CP</text>
+              </g>
+              <g class="tactical-symbol radio-point" transform="translate(326 82)">
+                <circle r="18"/>
+                <path d="M-27 -19 C-14 -34 14 -34 27 -19"/>
+                <path d="M-21 -12 C-10 -24 10 -24 21 -12"/>
+                <text x="0" y="7">MP</text>
+              </g>
+            </g>
+            <g class="station-zone" transform="translate(288 138)">
+              <circle r="58"/>
+              <circle r="42"/>
+              <path d="M-70 0 H-46 M46 0 H70 M0 -70 V-46 M0 46 V70"/>
+            </g>
             <g class="station-marker" transform="translate(288 138)">
               <circle r="31"/>
               <circle r="10"/>
+              <path class="station-flag" d="M8 -38 V-12 M8 -38 L42 -28 L8 -18"/>
             </g>
-            <text class="station-text" x="328" y="152">STATION</text>
-            <text class="station-text" x="328" y="174">QUIZ</text>
+            <text class="station-code" x="328" y="146">STN BW-QUIZ</text>
+            <text class="station-sub" x="328" y="169">Station: Bundeswehr Quiz</text>
+            <g class="map-callout">
+              <rect x="46" y="58" width="146" height="52"/>
+              <text x="62" y="81">LAGE 01</text>
+              <text x="62" y="101">ÜBPL WILDFLECKEN</text>
+            </g>
             <g class="north">
               <text x="454" y="72">N</text>
               <path d="M454 92 L438 135 L454 124 L470 135 Z"/>
@@ -224,10 +271,21 @@
         <button id="scoreboard-clear-btn" class="secondary danger" type="button">Scoreboard löschen</button>
       </div>
     </section>
+    <section id="operator-screen" class="card operator-card hidden">
+      <div class="badge">Bediener</div>
+      <h1>Steuerung</h1>
+      <div class="operator-actions">
+        <button id="operator-theme-btn" class="secondary" type="button">Design: Feldjägerregiment 2</button>
+        <button id="operator-scoreboard-btn" class="primary" type="button">Scoreboard anzeigen</button>
+        <button id="operator-clear-scoreboard-btn" class="secondary danger" type="button">Scoreboard löschen</button>
+        <button id="operator-reset-btn" class="secondary danger" type="button">Zur Startseite</button>
+        <button id="operator-back-btn" class="secondary" type="button">Zurück</button>
+      </div>
+    </section>
   </main>
 
   <div class="app-corner" aria-live="polite">
-    <button id="theme-toggle" class="theme-toggle" type="button">Design: Feldjägerregiment 2</button>
+    <button id="operator-btn" class="operator-button" type="button">Bediener</button>
     <span id="connection-status">Online</span>
     <span>Entwickelt von Ubi</span>
   </div>
