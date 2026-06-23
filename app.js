@@ -52,10 +52,12 @@ const groupNameInput = document.getElementById("group-name");
 
 const readyTitle = document.getElementById("ready-title");
 const readyProgress = document.getElementById("ready-progress");
+const readyGroup = document.getElementById("ready-group");
 const readyScore = document.getElementById("ready-score");
 const readyProgressFill = document.getElementById("ready-progress-fill");
 
 const progressEl = document.getElementById("progress");
+const quizGroup = document.getElementById("quiz-group");
 const scoreEl = document.getElementById("score");
 const progressFill = document.getElementById("progress-fill");
 const questionEl = document.getElementById("question");
@@ -117,6 +119,17 @@ function getEnteredGroupName() {
   return groupNameInput ? groupNameInput.value.trim() : "";
 }
 
+function normalizeGroupName(name) {
+  return name.trim().replace(/\s+/g, " ").toLowerCase();
+}
+
+function hasScoreboardEntryForGroup(groupName) {
+  const normalizedName = normalizeGroupName(groupName);
+  if (!normalizedName) return false;
+
+  return getScoreboardEntries().some((entry) => normalizeGroupName(entry.groupName) === normalizedName);
+}
+
 function getScoreboardEntries() {
   try {
     const stored = localStorage.getItem(SCOREBOARD_STORAGE_KEY);
@@ -157,6 +170,7 @@ function formatExerciseSummary(entry) {
 
 function saveCurrentResult(wrong, pushups, squats) {
   if (!currentGroupName || resultSavedForCurrentRun) return false;
+  if (hasScoreboardEntryForGroup(currentGroupName)) return false;
 
   const entries = getScoreboardEntries();
   entries.push({
@@ -209,8 +223,15 @@ function renderScoreboard() {
     const time = document.createElement("small");
     time.textContent = formatDateTime(entry.createdAt);
 
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "scoreboard-delete";
+    deleteButton.type = "button";
+    deleteButton.setAttribute("aria-label", `${entry.groupName} löschen`);
+    deleteButton.textContent = "×";
+    deleteButton.addEventListener("click", () => deleteScoreboardEntry(entry.id));
+
     body.append(name, meta, time);
-    row.append(rankEl, body);
+    row.append(rankEl, body, deleteButton);
     scoreboardList.appendChild(row);
   });
 }
@@ -228,6 +249,18 @@ function clearScoreboard() {
   renderScoreboard();
 }
 
+function deleteScoreboardEntry(entryId) {
+  const entries = getScoreboardEntries();
+  const entry = entries.find((item) => item.id === entryId);
+  if (!entry) return;
+
+  const shouldDelete = confirm(`Eintrag "${entry.groupName}" wirklich löschen?`);
+  if (!shouldDelete) return;
+
+  saveScoreboardEntries(entries.filter((item) => item.id !== entryId));
+  renderScoreboard();
+}
+
 function showScreen(screen) {
   introScreen.classList.add("hidden");
   startScreen.classList.add("hidden");
@@ -236,6 +269,15 @@ function showScreen(screen) {
   resultScreen.classList.add("hidden");
   scoreboardScreen.classList.add("hidden");
   screen.classList.remove("hidden");
+}
+
+function updateGroupLabels() {
+  [readyGroup, quizGroup].forEach((element) => {
+    if (!element) return;
+
+    element.textContent = currentGroupName ? `Gruppe: ${currentGroupName}` : "Testdurchgang";
+    element.classList.toggle("hidden", false);
+  });
 }
 
 function setAnswerButtonsLocked(locked) {
@@ -301,6 +343,13 @@ function updateConnectionStatus() {
 function startQuiz() {
   currentGroupName = getEnteredGroupName();
   resultSavedForCurrentRun = false;
+
+  if (currentGroupName && hasScoreboardEntryForGroup(currentGroupName)) {
+    alert("Diese Gruppe ist bereits im Scoreboard. Bitte anderen Namen wählen oder den alten Eintrag im Scoreboard löschen.");
+    showScreen(introScreen);
+    return;
+  }
+
   currentIndex = 0;
   correctCount = 0;
   penalties = [];
@@ -321,6 +370,7 @@ function showReadyScreen() {
   readyTitle.textContent = `Soldat ${currentIndex + 1} bereit?`;
   readyProgress.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   readyScore.textContent = formatPoints(correctCount);
+  updateGroupLabels();
   readyProgressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
   showScreen(readyScreen);
@@ -339,6 +389,7 @@ function renderQuestion() {
 
   progressEl.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   scoreEl.textContent = formatPoints(correctCount);
+  updateGroupLabels();
   progressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
   questionEl.textContent = q.frage;

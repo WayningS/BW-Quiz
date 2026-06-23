@@ -566,6 +566,8 @@ button:active {
 
 .top-row {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 12px;
   color: var(--muted);
@@ -573,6 +575,14 @@ button:active {
   font-weight: 950;
   text-transform: uppercase;
   letter-spacing: .08em;
+}
+
+.group-chip {
+  max-width: 100%;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, .055);
+  border: 1px solid var(--line);
+  color: var(--gold);
 }
 
 .progressbar {
@@ -722,7 +732,7 @@ button:active {
 
 .scoreboard-row {
   display: grid;
-  grid-template-columns: 70px 1fr;
+  grid-template-columns: 70px 1fr auto;
   gap: 14px;
   align-items: center;
   padding: 16px;
@@ -766,6 +776,24 @@ button:active {
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: .05em;
+}
+
+.scoreboard-delete {
+  width: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  background: rgba(20, 30, 36, .9);
+  color: var(--gold);
+  font-size: 28px;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.scoreboard-delete:active {
+  transform: translateY(1px);
+  box-shadow: none;
 }
 
 .scoreboard-empty {
@@ -1229,6 +1257,13 @@ button:active {
   letter-spacing: 0;
 }
 
+.theme-classic .group-chip {
+  border: 1px solid rgba(143, 175, 114, .34);
+  border-radius: 999px;
+  background: rgba(143, 175, 114, .12);
+  color: var(--accent);
+}
+
 .theme-classic .progressbar {
   height: 10px;
   background: rgba(255, 255, 255, .08);
@@ -1331,6 +1366,13 @@ button:active {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: rgba(255, 255, 255, .06);
+}
+
+.theme-classic .scoreboard-delete {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .08);
+  color: var(--danger);
 }
 
 .theme-classic .question-image {
@@ -1465,7 +1507,7 @@ button:active {
   }
 
   .scoreboard-row {
-    grid-template-columns: 52px 1fr;
+    grid-template-columns: 52px 1fr auto;
     padding: 14px;
   }
 
