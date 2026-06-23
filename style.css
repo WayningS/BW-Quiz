@@ -401,19 +401,6 @@ h3 {
   color: rgba(248, 247, 242, .42);
 }
 
-.map-grid-major {
-  fill: url(#map-grid-major);
-  color: rgba(248, 247, 242, .62);
-}
-
-.map-grid-labels text {
-  fill: var(--gold);
-  font-size: 11px;
-  font-weight: 950;
-  letter-spacing: .08em;
-  opacity: .55;
-}
-
 .contours path {
   fill: none;
   stroke: var(--red);
@@ -428,40 +415,18 @@ h3 {
   opacity: .2;
 }
 
-.map-areas path {
-  fill: rgba(255, 113, 31, .1);
-  stroke: rgba(255, 113, 31, .58);
-  stroke-width: 2;
-  stroke-dasharray: 10 9;
-}
-
 .route {
   fill: none;
   stroke: var(--red);
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 16 12;
 }
 
 .route-shadow {
   stroke: var(--gold);
   stroke-width: 8;
   opacity: .78;
-  stroke-dasharray: none;
-}
-
-.station-zone circle,
-.station-zone path {
-  fill: none;
-  stroke: var(--gold);
-  stroke-width: 2;
-  opacity: .7;
-}
-
-.station-zone circle:first-child {
-  stroke-dasharray: 8 8;
-  opacity: .42;
 }
 
 .station-marker circle:first-child {
@@ -474,18 +439,7 @@ h3 {
   fill: var(--black);
 }
 
-.station-flag {
-  fill: var(--gold);
-  stroke: var(--black);
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
-
 .station-text,
-.station-code,
-.station-sub,
-.map-callout text,
-.tactical-symbol text,
 .north text,
 .map-foot {
   fill: var(--gold);
@@ -496,48 +450,6 @@ h3 {
 
 .station-text {
   font-size: 23px;
-}
-
-.station-code {
-  font-size: 20px;
-}
-
-.station-sub {
-  fill: var(--ink);
-  font-size: 12px;
-  letter-spacing: .06em;
-}
-
-.map-callout rect {
-  fill: rgba(20, 30, 36, .9);
-  stroke: var(--gold);
-  stroke-width: 2;
-}
-
-.map-callout text {
-  font-size: 12px;
-  letter-spacing: .08em;
-}
-
-.map-callout text:first-of-type {
-  fill: var(--red);
-}
-
-.tactical-symbol rect,
-.tactical-symbol circle,
-.tactical-symbol path {
-  fill: rgba(20, 30, 36, .92);
-  stroke: var(--gold);
-  stroke-width: 2;
-}
-
-.tactical-symbol path:not(:first-child) {
-  fill: none;
-}
-
-.tactical-symbol text {
-  font-size: 14px;
-  text-anchor: middle;
 }
 
 .north text {
@@ -1155,22 +1067,9 @@ button:active {
   color: rgba(255, 255, 255, .32);
 }
 
-.theme-classic .map-grid-major {
-  color: rgba(143, 175, 114, .42);
-}
-
-.theme-classic .map-grid-labels text {
-  fill: var(--muted-classic);
-}
-
 .theme-classic .contours path,
 .theme-classic .route {
   stroke: var(--accent);
-}
-
-.theme-classic .map-areas path {
-  fill: rgba(143, 175, 114, .1);
-  stroke: rgba(143, 175, 114, .48);
 }
 
 .theme-classic .terrain-lines path {
@@ -1190,38 +1089,9 @@ button:active {
   fill: #11180f;
 }
 
-.theme-classic .station-zone circle,
-.theme-classic .station-zone path {
-  stroke: var(--accent);
-}
-
-.theme-classic .station-flag {
-  fill: var(--accent);
-  stroke: #11180f;
-}
-
 .theme-classic .station-text,
-.theme-classic .station-code,
-.theme-classic .map-callout text,
-.theme-classic .tactical-symbol text,
 .theme-classic .north text {
   fill: var(--text);
-}
-
-.theme-classic .station-sub {
-  fill: var(--muted-classic);
-}
-
-.theme-classic .map-callout rect,
-.theme-classic .tactical-symbol rect,
-.theme-classic .tactical-symbol circle,
-.theme-classic .tactical-symbol path {
-  fill: rgba(18, 26, 20, .9);
-  stroke: var(--accent);
-}
-
-.theme-classic .map-callout text:first-of-type {
-  fill: var(--accent);
 }
 
 .theme-classic .north path {
