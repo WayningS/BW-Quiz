@@ -3,6 +3,9 @@ const QUESTION_TIME = 60;
 const TIMER_WARNING_TIME = 10;
 const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
+const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
+const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
+const OPERATOR_HOLD_MS = 2000;
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
@@ -42,6 +45,8 @@ let currentGroupName = "";
 let resultSavedForCurrentRun = false;
 let activeScreen = null;
 let operatorReturnScreen = null;
+let operatorHoldTimer = null;
+let operatorHoldTriggered = false;
 
 const introScreen = document.getElementById("intro-screen");
 const startScreen = document.getElementById("start-screen");
@@ -64,6 +69,7 @@ const operatorBtn = document.getElementById("operator-btn");
 const operatorThemeBtn = document.getElementById("operator-theme-btn");
 const operatorScoreboardBtn = document.getElementById("operator-scoreboard-btn");
 const operatorClearScoreboardBtn = document.getElementById("operator-clear-scoreboard-btn");
+const operatorOutdoorBtn = document.getElementById("operator-outdoor-btn");
 const operatorResetBtn = document.getElementById("operator-reset-btn");
 const operatorBackBtn = document.getElementById("operator-back-btn");
 const groupNameInput = document.getElementById("group-name");
@@ -165,6 +171,81 @@ function saveScoreboardEntries(entries) {
   }
 }
 
+function getSavedRunState() {
+  try {
+    const stored = localStorage.getItem(RUN_STATE_STORAGE_KEY);
+    if (!stored) return null;
+
+    const state = JSON.parse(stored);
+    if (!state || !Array.isArray(state.quizQuestions)) return null;
+    if (state.quizQuestions.length < TOTAL_QUESTIONS) return null;
+    if (!Number.isInteger(state.currentIndex)) return null;
+
+    return state;
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveRunState(nextIndex = currentIndex) {
+  if (!quizQuestions.length || nextIndex > TOTAL_QUESTIONS) return;
+
+  try {
+    localStorage.setItem(RUN_STATE_STORAGE_KEY, JSON.stringify({
+      currentIndex: nextIndex,
+      correctCount,
+      penalties,
+      jokerPenalties,
+      quizQuestions,
+      currentGroupName,
+      savedAt: new Date().toISOString()
+    }));
+  } catch (error) {
+    console.error("Zwischenstand konnte nicht gespeichert werden.", error);
+  }
+}
+
+function clearRunState() {
+  try {
+    localStorage.removeItem(RUN_STATE_STORAGE_KEY);
+  } catch (error) {
+    // Ohne lokalen Speicher gibt es auch keinen Zwischenstand zu entfernen.
+  }
+}
+
+function restoreRunState(state) {
+  quizQuestions = state.quizQuestions;
+  currentIndex = Math.min(Math.max(state.currentIndex, 0), TOTAL_QUESTIONS);
+  correctCount = Number.isInteger(state.correctCount) ? state.correctCount : 0;
+  penalties = Array.isArray(state.penalties) ? state.penalties : [];
+  jokerPenalties = Array.isArray(state.jokerPenalties) ? state.jokerPenalties : [];
+  currentGroupName = state.currentGroupName || "";
+  resultSavedForCurrentRun = false;
+
+  if (groupNameInput) {
+    groupNameInput.value = currentGroupName;
+  }
+
+  if (currentIndex >= TOTAL_QUESTIONS) {
+    showResults();
+    return;
+  }
+
+  showReadyScreen();
+}
+
+function offerRunRestore() {
+  const savedRun = getSavedRunState();
+  if (!savedRun) return;
+
+  const shouldRestore = confirm("Offenen Durchgang fortsetzen?");
+  if (shouldRestore) {
+    restoreRunState(savedRun);
+  } else {
+    clearRunState();
+  }
+}
+
 function formatDateTime(value) {
   try {
     return new Intl.DateTimeFormat("de-DE", {
@@ -236,10 +317,21 @@ function renderScoreboard() {
     name.textContent = entry.groupName;
 
     const meta = document.createElement("span");
-    meta.textContent = `${entry.points}/${TOTAL_QUESTIONS} Punkte · ${entry.wrong} falsch · ${formatExerciseSummary(entry)}`;
+    meta.textContent = `${entry.wrong} falsch · ${formatExerciseSummary(entry)}`;
 
     const time = document.createElement("small");
     time.textContent = formatDateTime(entry.createdAt);
+
+    const points = document.createElement("div");
+    points.className = "scoreboard-points";
+
+    const pointValue = document.createElement("strong");
+    pointValue.textContent = `${entry.points}/${TOTAL_QUESTIONS}`;
+
+    const pointLabel = document.createElement("small");
+    pointLabel.textContent = "Punkte";
+
+    points.append(pointValue, pointLabel);
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "scoreboard-delete";
@@ -249,7 +341,7 @@ function renderScoreboard() {
     deleteButton.addEventListener("click", () => deleteScoreboardEntry(entry.id));
 
     body.append(name, meta, time);
-    row.append(rankEl, body, deleteButton);
+    row.append(rankEl, body, points, deleteButton);
     scoreboardList.appendChild(row);
   });
 }
@@ -312,6 +404,37 @@ function closeOperatorScreen() {
   operatorReturnScreen = null;
 }
 
+function resetOperatorHold() {
+  if (operatorHoldTimer) {
+    clearTimeout(operatorHoldTimer);
+    operatorHoldTimer = null;
+  }
+
+  operatorHoldTriggered = false;
+  operatorBtn.classList.remove("is-holding");
+  operatorBtn.textContent = "Bediener";
+}
+
+function startOperatorHold(event) {
+  if (event.pointerType === "mouse" && event.button !== 0) return;
+
+  event.preventDefault();
+  resetOperatorHold();
+  operatorBtn.classList.add("is-holding");
+  operatorBtn.textContent = "Halten...";
+
+  operatorHoldTimer = setTimeout(() => {
+    operatorHoldTriggered = true;
+    openOperatorScreen();
+    resetOperatorHold();
+  }, OPERATOR_HOLD_MS);
+}
+
+function cancelOperatorHold() {
+  if (operatorHoldTriggered) return;
+  resetOperatorHold();
+}
+
 function setAnswerButtonsLocked(locked) {
   [...answersEl.children].forEach((btn) => {
     btn.disabled = locked;
@@ -357,6 +480,36 @@ function applyTheme(themeName) {
 function toggleTheme() {
   const currentTheme = document.body.dataset.theme === "classic" ? "classic" : "exhibition";
   applyTheme(currentTheme === "classic" ? "exhibition" : "classic");
+}
+
+function getSavedOutdoorMode() {
+  try {
+    return localStorage.getItem(OUTDOOR_MODE_STORAGE_KEY) === "true";
+  } catch (error) {
+    return false;
+  }
+}
+
+function saveOutdoorMode(enabled) {
+  try {
+    localStorage.setItem(OUTDOOR_MODE_STORAGE_KEY, String(enabled));
+  } catch (error) {
+    // Die Anzeige funktioniert auch ohne gespeicherten Outdoor-Modus.
+  }
+}
+
+function applyOutdoorMode(enabled) {
+  document.body.classList.toggle("outdoor-mode", enabled);
+
+  if (operatorOutdoorBtn) {
+    operatorOutdoorBtn.textContent = enabled ? "Outdoor-Modus: An" : "Outdoor-Modus: Aus";
+  }
+
+  saveOutdoorMode(enabled);
+}
+
+function toggleOutdoorMode() {
+  applyOutdoorMode(!document.body.classList.contains("outdoor-mode"));
 }
 
 function updateConnectionStatus() {
@@ -424,6 +577,7 @@ function startQuiz() {
     return;
   }
 
+  saveRunState(0);
   showReadyScreen();
 }
 
@@ -435,6 +589,7 @@ function showReadyScreen() {
   readyScore.textContent = formatPoints(correctCount);
   readyProgressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
 
+  saveRunState(currentIndex);
   showScreen(readyScreen);
 }
 
@@ -636,6 +791,7 @@ function answerQuestion(selected) {
     correctCount++;
     feedbackEl.innerHTML = `<strong>Richtig!</strong><br>${q.erklaerung || ""}`;
     nextBtn.classList.remove("hidden");
+    saveRunState(currentIndex + 1);
   } else {
     feedbackEl.innerHTML = `<strong>Falsch.</strong><br>Richtig wäre Antwort ${q.richtig}. ${q.erklaerung || ""}`;
     penaltyBox.classList.remove("hidden");
@@ -649,6 +805,7 @@ document.querySelectorAll("[data-penalty]").forEach((btn) => {
     penalties.push(btn.dataset.penalty);
     penaltyBox.classList.add("hidden");
     nextBtn.classList.remove("hidden");
+    saveRunState(currentIndex + 1);
   });
 });
 
@@ -658,6 +815,7 @@ function nextQuestion() {
   if (currentIndex >= TOTAL_QUESTIONS) {
     showResults();
   } else {
+    saveRunState(currentIndex);
     showReadyScreen();
   }
 }
@@ -693,6 +851,7 @@ function showResults() {
   }
 
   showScreen(resultScreen);
+  clearRunState();
 }
 
 function confirmResetToStartScreen() {
@@ -712,6 +871,7 @@ function resetToStartScreen() {
   currentGroupName = "";
   resultSavedForCurrentRun = false;
   if (groupNameInput) groupNameInput.value = "";
+  clearRunState();
   showScreen(introScreen);
 }
 
@@ -728,7 +888,12 @@ nextBtn.addEventListener("click", nextQuestion);
 scoreboardBtn.addEventListener("click", showScoreboard);
 scoreboardBackBtn.addEventListener("click", resetToStartScreen);
 scoreboardClearBtn.addEventListener("click", clearScoreboard);
-operatorBtn.addEventListener("click", openOperatorScreen);
+operatorBtn.addEventListener("pointerdown", startOperatorHold);
+operatorBtn.addEventListener("pointerup", cancelOperatorHold);
+operatorBtn.addEventListener("pointerleave", cancelOperatorHold);
+operatorBtn.addEventListener("pointercancel", cancelOperatorHold);
+operatorBtn.addEventListener("contextmenu", (event) => event.preventDefault());
+operatorBtn.addEventListener("click", (event) => event.preventDefault());
 operatorScoreboardBtn.addEventListener("click", showScoreboard);
 operatorClearScoreboardBtn.addEventListener("click", clearScoreboard);
 operatorResetBtn.addEventListener("click", confirmResetToStartScreen);
@@ -736,15 +901,21 @@ operatorBackBtn.addEventListener("click", closeOperatorScreen);
 if (operatorThemeBtn) {
   operatorThemeBtn.addEventListener("click", toggleTheme);
 }
+if (operatorOutdoorBtn) {
+  operatorOutdoorBtn.addEventListener("click", toggleOutdoorMode);
+}
 window.addEventListener("online", updateConnectionStatus);
 window.addEventListener("offline", updateConnectionStatus);
 applyTheme(getSavedTheme() || "exhibition");
+applyOutdoorMode(getSavedOutdoorMode());
 updateConnectionStatus();
 
-loadQuestions().catch((error) => {
-  console.error(error);
-  alert("Fehler beim Laden der Fragen. Prüfe die Datei fragen.json.");
-});
+loadQuestions()
+  .then(() => offerRunRestore())
+  .catch((error) => {
+    console.error(error);
+    alert("Fehler beim Laden der Fragen. Prüfe die Datei fragen.json.");
+  });
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
