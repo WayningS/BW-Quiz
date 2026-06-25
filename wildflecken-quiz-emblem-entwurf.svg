@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 390" role="img" aria-labelledby="title desc">
+  <title id="title">Eigener Wildflecken Quiz Wappenentwurf</title>
+  <desc id="desc">Ein eigenstaendiges Schildlogo in Orange, Anthrazit und Weiss fuer die Quizstation.</desc>
+  <defs>
+    <clipPath id="shield-clip">
+      <path d="M28 22h264v188c0 50-30 94-78 124l-54 34-54-34c-48-30-78-74-78-124V22z"/>
+    </clipPath>
+    <linearGradient id="shine" x1="58" y1="28" x2="252" y2="304" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".28"/>
+      <stop offset=".34" stop-color="#ffffff" stop-opacity=".08"/>
+      <stop offset=".35" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="10" dy="12" stdDeviation="0" flood-color="#000000" flood-opacity=".22"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <path d="M28 22h264v188c0 50-30 94-78 124l-54 34-54-34c-48-30-78-74-78-124V22z" fill="#172228"/>
+    <g clip-path="url(#shield-clip)">
+      <path d="M132 360 320 110v250H132z" fill="#ff711f"/>
+      <path d="M0 0h320v360H0z" fill="url(#shine)"/>
+    </g>
+
+    <path d="M28 22h264v188c0 50-30 94-78 124l-54 34-54-34c-48-30-78-74-78-124V22z"
+      fill="none" stroke="#f8f7f2" stroke-width="9" stroke-linejoin="round"/>
+    <path d="M36 30h248v178c0 46-28 86-72 114l-52 32-52-32c-44-28-72-68-72-114V30z"
+      fill="none" stroke="#ff711f" stroke-width="4" stroke-linejoin="round"/>
+
+    <g transform="translate(160 142)">
+      <g stroke="#b9c0be" stroke-width="7" stroke-linecap="round" opacity=".86">
+        <path d="M0-88v50"/>
+        <path d="M0 88V38"/>
+        <path d="M-88 0h50"/>
+        <path d="M88 0H38"/>
+        <path d="M-62-62l35 35"/>
+        <path d="M62 62 27 27"/>
+        <path d="M62-62 27-27"/>
+        <path d="M-62 62-27 27"/>
+      </g>
+      <g fill="#b9c0be" opacity=".76">
+        <path d="M0-105 13-42-13-42z"/>
+        <path d="M0 105 13 42-13 42z"/>
+        <path d="M-105 0-42-13-42 13z"/>
+        <path d="M105 0 42-13 42 13z"/>
+      </g>
+      <circle r="42" fill="#172228" stroke="#f8f7f2" stroke-width="8"/>
+      <circle r="27" fill="#ff711f" stroke="#172228" stroke-width="5"/>
+      <text x="0" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="35" font-weight="900" fill="#172228">H</text>
+    </g>
+
+    <g fill="none" stroke="#f8f7f2" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".92">
+      <path d="M72 252l24-34 24 34"/>
+      <path d="M96 218v54"/>
+      <circle cx="226" cy="250" r="22"/>
+      <path d="M226 222v-13M226 291v-13M198 250h-13M267 250h-13"/>
+      <circle cx="158" cy="286" r="24"/>
+      <path d="M158 262v48M134 286h48"/>
+    </g>
+
+    <text x="160" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="900" letter-spacing="2" fill="#f8f7f2">QUIZ</text>
+  </g>
+</svg>
