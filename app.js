@@ -5,7 +5,6 @@ const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
 const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
-const OPERATOR_HOLD_MS = 2000;
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
@@ -45,8 +44,6 @@ let currentGroupName = "";
 let resultSavedForCurrentRun = false;
 let activeScreen = null;
 let operatorReturnScreen = null;
-let operatorHoldTimer = null;
-let operatorHoldTriggered = false;
 
 const introScreen = document.getElementById("intro-screen");
 const startScreen = document.getElementById("start-screen");
@@ -402,37 +399,6 @@ function openOperatorScreen() {
 function closeOperatorScreen() {
   showScreen(operatorReturnScreen || introScreen);
   operatorReturnScreen = null;
-}
-
-function resetOperatorHold() {
-  if (operatorHoldTimer) {
-    clearTimeout(operatorHoldTimer);
-    operatorHoldTimer = null;
-  }
-
-  operatorHoldTriggered = false;
-  operatorBtn.classList.remove("is-holding");
-  operatorBtn.textContent = "Bediener";
-}
-
-function startOperatorHold(event) {
-  if (event.pointerType === "mouse" && event.button !== 0) return;
-
-  event.preventDefault();
-  resetOperatorHold();
-  operatorBtn.classList.add("is-holding");
-  operatorBtn.textContent = "Halten...";
-
-  operatorHoldTimer = setTimeout(() => {
-    operatorHoldTriggered = true;
-    openOperatorScreen();
-    resetOperatorHold();
-  }, OPERATOR_HOLD_MS);
-}
-
-function cancelOperatorHold() {
-  if (operatorHoldTriggered) return;
-  resetOperatorHold();
 }
 
 function setAnswerButtonsLocked(locked) {
@@ -888,12 +854,7 @@ nextBtn.addEventListener("click", nextQuestion);
 scoreboardBtn.addEventListener("click", showScoreboard);
 scoreboardBackBtn.addEventListener("click", resetToStartScreen);
 scoreboardClearBtn.addEventListener("click", clearScoreboard);
-operatorBtn.addEventListener("pointerdown", startOperatorHold);
-operatorBtn.addEventListener("pointerup", cancelOperatorHold);
-operatorBtn.addEventListener("pointerleave", cancelOperatorHold);
-operatorBtn.addEventListener("pointercancel", cancelOperatorHold);
-operatorBtn.addEventListener("contextmenu", (event) => event.preventDefault());
-operatorBtn.addEventListener("click", (event) => event.preventDefault());
+operatorBtn.addEventListener("click", openOperatorScreen);
 operatorScoreboardBtn.addEventListener("click", showScoreboard);
 operatorClearScoreboardBtn.addEventListener("click", clearScoreboard);
 operatorResetBtn.addEventListener("click", confirmResetToStartScreen);

@@ -984,30 +984,7 @@ button:active {
 
 .operator-button {
   pointer-events: auto;
-  position: relative;
-  overflow: hidden;
-  touch-action: none;
   user-select: none;
-}
-
-.operator-button::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 3px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-}
-
-.operator-button.is-holding::after {
-  animation: operatorHold 2s linear forwards;
-}
-
-@keyframes operatorHold {
-  to {
-    transform: scaleX(1);
-  }
 }
 
 .operator-button:active {
