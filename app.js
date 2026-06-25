@@ -11,6 +11,7 @@ const OFFLINE_ASSETS = [
   "./style.css",
   "./app.js",
   "./fragen.json",
+  "./feldjaegerregiment-2-logo.png",
   "./manifest.webmanifest",
   "./icon.svg"
 ];

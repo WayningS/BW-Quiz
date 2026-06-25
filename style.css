@@ -118,58 +118,17 @@ body::before {
   width: 118px;
   aspect-ratio: 1;
   position: relative;
-  display: grid;
-  place-items: center;
-  align-content: center;
+  display: block;
   overflow: hidden;
-  background: var(--black);
-  border: 4px solid var(--red);
-  box-shadow: 10px 10px 0 rgba(0, 0, 0, .24);
+  background: transparent;
+  filter: drop-shadow(10px 10px 0 rgba(0, 0, 0, .24));
 }
 
-.flag-band {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-}
-
-.flag-band i:nth-child(1) {
-  background: #050505;
-}
-
-.flag-band i:nth-child(2) {
-  background: #d00;
-}
-
-.flag-band i:nth-child(3) {
-  background: #ffce00;
-}
-
-.unit-mark::after {
-  content: "";
-  position: absolute;
-  inset: 20px;
-  background: rgba(20, 30, 36, .92);
-  border: 3px solid var(--gold);
-}
-
-.unit-mark span,
-.unit-mark strong {
-  position: relative;
-  z-index: 1;
-  color: var(--gold);
-  font-weight: 950;
-  line-height: .9;
-}
-
-.unit-mark span {
-  font-size: 27px;
-}
-
-.unit-mark strong {
-  color: var(--red);
-  font-size: 44px;
+.unit-mark img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
 .badge {

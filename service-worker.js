@@ -1,4 +1,4 @@
-const CACHE_NAME = "bw-quiz-scoreboard-test-v9";
+const CACHE_NAME = "bw-quiz-scoreboard-test-v10";
 const NETWORK_TIMEOUT_MS = 3000;
 const APP_ASSETS = [
   "./",
@@ -6,6 +6,7 @@ const APP_ASSETS = [
   "./style.css",
   "./app.js",
   "./fragen.json",
+  "./feldjaegerregiment-2-logo.png",
   "./manifest.webmanifest",
   "./icon.svg"
 ];
