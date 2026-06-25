@@ -584,7 +584,7 @@ function startQuiz() {
 function showReadyScreen() {
   stopQuestionTimer();
 
-  readyTitle.textContent = `Soldat ${currentIndex + 1} bereit?`;
+  readyTitle.textContent = "Soldat bereit?";
   readyProgress.textContent = `Frage ${currentIndex + 1} von ${TOTAL_QUESTIONS}`;
   readyScore.textContent = formatPoints(correctCount);
   readyProgressFill.style.width = `${(currentIndex / TOTAL_QUESTIONS) * 100}%`;
