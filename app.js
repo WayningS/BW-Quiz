@@ -11,8 +11,6 @@ const OFFLINE_ASSETS = [
   "./style.css",
   "./app.js",
   "./fragen.json",
-  "./wildflecken-quiz-emblem.svg",
-  "./wildflecken-quiz-emblem.png",
   "./manifest.webmanifest",
   "./icon.svg"
 ];
