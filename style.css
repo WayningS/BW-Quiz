@@ -119,7 +119,8 @@ body::before {
   aspect-ratio: 1;
   position: relative;
   display: block;
-  overflow: hidden;
+  overflow: visible;
+  padding: 4px;
   background: transparent;
   filter: drop-shadow(10px 10px 0 rgba(0, 0, 0, .24));
 }
