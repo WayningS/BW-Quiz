@@ -1,4 +1,4 @@
-const CACHE_NAME = "bw-quiz-scoreboard-test-v13";
+const CACHE_NAME = "bw-quiz-scoreboard-test-v14";
 const NETWORK_TIMEOUT_MS = 3000;
 const APP_ASSETS = [
   "./",
@@ -6,6 +6,8 @@ const APP_ASSETS = [
   "./style.css",
   "./app.js",
   "./fragen.json",
+  "./wildflecken-quiz-emblem.svg",
+  "./wildflecken-quiz-emblem.png",
   "./manifest.webmanifest",
   "./icon.svg"
 ];
