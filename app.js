@@ -6,7 +6,7 @@ const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
 const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
 const QUIZ_SCALE_STORAGE_KEY = "bwQuizScale";
-const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v30";
+const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v31";
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
@@ -74,7 +74,6 @@ const operatorOutdoorBtn = document.getElementById("operator-outdoor-btn");
 const operatorQuizScaleInput = document.getElementById("operator-quiz-scale");
 const operatorQuizScaleValue = document.getElementById("operator-quiz-scale-value");
 const operatorResetBtn = document.getElementById("operator-reset-btn");
-const operatorBackBtn = document.getElementById("operator-back-btn");
 const groupNameInput = document.getElementById("group-name");
 
 const readyTitle = document.getElementById("ready-title");
@@ -475,7 +474,12 @@ function showScreen(screen) {
   activeScreen = screen;
 }
 
-function openOperatorScreen() {
+function toggleOperatorScreen() {
+  if (activeScreen === operatorScreen) {
+    closeOperatorScreen();
+    return;
+  }
+
   if (activeScreen !== operatorScreen) {
     operatorReturnScreen = activeScreen || introScreen;
   }
@@ -982,14 +986,13 @@ nextBtn.addEventListener("click", nextQuestion);
 scoreboardBtn.addEventListener("click", showScoreboard);
 scoreboardBackBtn.addEventListener("click", resetToStartScreen);
 scoreboardClearBtn.addEventListener("click", clearScoreboard);
-operatorBtn.addEventListener("click", openOperatorScreen);
+operatorBtn.addEventListener("click", toggleOperatorScreen);
 operatorScoreboardBtn.addEventListener("click", showScoreboard);
 operatorClearScoreboardBtn.addEventListener("click", clearScoreboard);
 if (operatorClearStorageBtn) {
   operatorClearStorageBtn.addEventListener("click", clearAppStorage);
 }
 operatorResetBtn.addEventListener("click", confirmResetToStartScreen);
-operatorBackBtn.addEventListener("click", closeOperatorScreen);
 if (operatorThemeBtn) {
   operatorThemeBtn.addEventListener("click", toggleTheme);
 }

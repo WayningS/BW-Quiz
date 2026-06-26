@@ -216,17 +216,33 @@
       <div class="badge">Bediener</div>
       <h1>Steuerung</h1>
       <div class="operator-actions">
-        <button id="operator-theme-btn" class="secondary" type="button">Design: Feldjägerregiment 2</button>
-        <button id="operator-scoreboard-btn" class="primary" type="button">Scoreboard anzeigen</button>
-        <button id="operator-outdoor-btn" class="secondary" type="button">Outdoor-Modus: Aus</button>
-        <label class="operator-scale-control" for="operator-quiz-scale">
-          <span>Quizfeld-Größe <strong id="operator-quiz-scale-value">100%</strong></span>
-          <input id="operator-quiz-scale" type="range" min="80" max="100" step="5" value="100">
-        </label>
-        <button id="operator-clear-scoreboard-btn" class="secondary danger" type="button">Scoreboard löschen</button>
-        <button id="operator-clear-storage-btn" class="secondary danger" type="button">App-Speicher bereinigen</button>
-        <button id="operator-reset-btn" class="secondary danger" type="button">Zur Startseite</button>
-        <button id="operator-back-btn" class="secondary" type="button">Zurück</button>
+        <section class="operator-section" aria-labelledby="operator-appearance-title">
+          <h2 id="operator-appearance-title" class="operator-section-title">Aussehen</h2>
+          <div class="operator-grid">
+            <button id="operator-theme-btn" class="secondary" type="button">Design: Feldjägerregiment 2</button>
+            <button id="operator-outdoor-btn" class="secondary" type="button">Outdoor-Modus: Aus</button>
+          </div>
+          <label class="operator-scale-control" for="operator-quiz-scale">
+            <span>Quizfeld-Größe <strong id="operator-quiz-scale-value">100%</strong></span>
+            <input id="operator-quiz-scale" type="range" min="80" max="100" step="5" value="100">
+          </label>
+        </section>
+
+        <section class="operator-section" aria-labelledby="operator-scoreboard-title">
+          <h2 id="operator-scoreboard-title" class="operator-section-title">Scoreboard Einstellungen</h2>
+          <div class="operator-grid">
+            <button id="operator-scoreboard-btn" class="secondary" type="button">Scoreboard anzeigen</button>
+            <button id="operator-clear-scoreboard-btn" class="secondary danger" type="button">Scoreboard löschen</button>
+          </div>
+        </section>
+
+        <section class="operator-section" aria-labelledby="operator-general-title">
+          <h2 id="operator-general-title" class="operator-section-title">Allgemein</h2>
+          <div class="operator-grid">
+            <button id="operator-clear-storage-btn" class="secondary danger" type="button">App-Speicher bereinigen</button>
+            <button id="operator-reset-btn" class="secondary danger" type="button">Zur Startseite</button>
+          </div>
+        </section>
       </div>
     </section>
   </main>
