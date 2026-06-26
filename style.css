@@ -333,14 +333,25 @@ h3 {
 }
 
 .operator-section-title {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
   margin: 0;
   color: var(--gold);
   font-size: clamp(19px, 2.3vw, 24px);
   font-weight: 950;
   line-height: 1.1;
-  text-align: center;
+  text-align: left;
   text-transform: uppercase;
   letter-spacing: .04em;
+}
+
+.operator-section-title::after {
+  content: "";
+  height: 2px;
+  background: var(--red);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .18);
 }
 
 .operator-grid {
@@ -1348,12 +1359,16 @@ button:active {
 }
 
 .theme-classic .operator-section-title {
-  margin: 0;
   color: var(--accent);
   font-size: clamp(28px, 4.4vw, 36px);
-  text-align: center;
+  text-align: left;
   text-transform: none;
   letter-spacing: 0;
+}
+
+.theme-classic .operator-section-title::after {
+  background: rgba(143, 175, 114, .55);
+  box-shadow: none;
 }
 
 .theme-classic .operator-actions button,
@@ -1651,6 +1666,10 @@ body.outdoor-mode .result-note {
 
 body.outdoor-mode .operator-section-title {
   color: #fff8d6;
+}
+
+body.outdoor-mode .operator-section-title::after {
+  background: var(--red);
 }
 
 body.outdoor-mode .operator-actions button,
