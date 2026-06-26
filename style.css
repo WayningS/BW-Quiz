@@ -996,27 +996,31 @@ button:active {
   left: calc(18px + var(--safe-left));
   bottom: calc(16px + var(--safe-bottom));
   z-index: 21;
-  width: 54px;
-  height: 54px;
+  width: 58px;
+  height: 58px;
   min-height: 0;
   display: grid;
   place-items: center;
   padding: 0;
-  background: rgba(17, 17, 17, .94);
-  border: 2px solid rgba(248, 247, 242, .2);
-  border-left: 5px solid var(--red);
-  border-radius: 50%;
-  color: var(--gold);
-  box-shadow: 5px 5px 0 rgba(0, 0, 0, .22);
+  background: #f8f7f2;
+  border: 3px solid #111820;
+  border-left: 6px solid var(--red);
+  border-radius: 13px;
+  color: #111820;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, .28);
   pointer-events: auto;
   user-select: none;
 }
 
 .operator-button svg {
-  width: 27px;
-  height: 27px;
+  width: 38px;
+  height: 38px;
   display: block;
-  fill: currentColor;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 5.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .operator-button:active {
@@ -1513,7 +1517,10 @@ button:active {
 }
 
 .theme-classic .operator-button {
+  border: 2px solid var(--border);
   border-left: 5px solid var(--accent);
+  border-radius: 13px;
+  background: rgba(15, 20, 16, .92);
   color: var(--accent);
 }
 
@@ -1639,8 +1646,10 @@ body.outdoor-mode .operator-button {
   width: 58px;
   height: 58px;
   padding: 0;
-  border: 3px solid #fff;
+  background: #fff8d6;
+  border: 3px solid #000;
   border-left: 6px solid var(--red);
+  color: #000;
 }
 
 body.outdoor-mode .app-corner {
@@ -1769,8 +1778,8 @@ body.outdoor-mode .app-corner {
   .operator-button {
     left: calc(10px + var(--safe-left));
     bottom: calc(10px + var(--safe-bottom));
-    width: 50px;
-    height: 50px;
+    width: 52px;
+    height: 52px;
     padding: 0;
   }
 }
