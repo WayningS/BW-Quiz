@@ -971,15 +971,14 @@ button:active {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
-  max-width: min(820px, calc(100vw - 36px));
+  max-width: min(820px, calc(100vw - 118px - var(--safe-left) - var(--safe-right)));
   color: #fff;
   font-size: 12px;
   font-weight: 950;
   pointer-events: none;
 }
 
-.app-corner span,
-.operator-button {
+.app-corner span {
   min-height: 0;
   padding: 7px 10px;
   background: rgba(17, 17, 17, .92);
@@ -993,8 +992,31 @@ button:active {
 }
 
 .operator-button {
+  position: fixed;
+  left: calc(18px + var(--safe-left));
+  bottom: calc(16px + var(--safe-bottom));
+  z-index: 21;
+  width: 54px;
+  height: 54px;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: rgba(17, 17, 17, .94);
+  border: 2px solid rgba(248, 247, 242, .2);
+  border-left: 5px solid var(--red);
+  border-radius: 50%;
+  color: var(--gold);
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, .22);
   pointer-events: auto;
   user-select: none;
+}
+
+.operator-button svg {
+  width: 27px;
+  height: 27px;
+  display: block;
+  fill: currentColor;
 }
 
 .operator-button:active {
@@ -1490,6 +1512,11 @@ button:active {
   color: var(--muted-classic);
 }
 
+.theme-classic .operator-button {
+  border-left: 5px solid var(--accent);
+  color: var(--accent);
+}
+
 .theme-classic #connection-status.is-ready {
   color: var(--accent);
   border-color: rgba(143, 175, 114, .4);
@@ -1606,6 +1633,14 @@ body.outdoor-mode .operator-button {
   font-size: 12px;
   line-height: 1.2;
   box-shadow: none;
+}
+
+body.outdoor-mode .operator-button {
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  border: 3px solid #fff;
+  border-left: 6px solid var(--red);
 }
 
 body.outdoor-mode .app-corner {
@@ -1727,7 +1762,15 @@ body.outdoor-mode .app-corner {
     right: calc(10px + var(--safe-right));
     bottom: calc(10px + var(--safe-bottom));
     justify-content: center;
-    max-width: calc(100vw - 20px);
+    max-width: calc(100vw - 86px - var(--safe-left) - var(--safe-right));
     font-size: 11px;
+  }
+
+  .operator-button {
+    left: calc(10px + var(--safe-left));
+    bottom: calc(10px + var(--safe-bottom));
+    width: 50px;
+    height: 50px;
+    padding: 0;
   }
 }
