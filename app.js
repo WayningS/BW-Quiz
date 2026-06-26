@@ -5,7 +5,7 @@ const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
 const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
-const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v20";
+const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v22";
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
