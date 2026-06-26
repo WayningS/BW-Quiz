@@ -18,7 +18,8 @@
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
-  --header-height: 52px;
+  --header-height: 44px;
+  --header-gap: 12px;
 }
 
 html,
@@ -46,19 +47,22 @@ body::before {
 
 .site-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  top: calc(var(--safe-top) + var(--header-gap));
+  left: calc(var(--safe-left) + 14px);
+  right: calc(var(--safe-right) + 14px);
   z-index: 20;
-  min-height: calc(var(--header-height) + var(--safe-top));
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: var(--safe-top) calc(clamp(16px, 4vw, 42px) + var(--safe-right)) 0 calc(clamp(16px, 4vw, 42px) + var(--safe-left));
+  padding: 0 clamp(16px, 4vw, 34px);
   background: rgba(20, 30, 36, .97);
   color: #fff;
+  border: 1px solid rgba(248, 247, 242, .16);
   border-bottom: 3px solid var(--red);
+  border-radius: 8px;
+  box-shadow: 0 10px 26px rgba(20, 30, 36, .22);
   font-size: 13px;
   font-weight: 950;
   letter-spacing: .12em;
@@ -73,7 +77,7 @@ body::before {
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: calc(var(--header-height) + var(--safe-top) + 30px) calc(22px + var(--safe-right)) calc(96px + var(--safe-bottom)) calc(22px + var(--safe-left));
+  padding: calc(var(--safe-top) + var(--header-gap) + var(--header-height) + 32px) calc(22px + var(--safe-right)) calc(96px + var(--safe-bottom)) calc(22px + var(--safe-left));
 }
 
 @supports (min-height: 100dvh) {
@@ -990,7 +994,7 @@ button:active {
 }
 
 .theme-classic .app {
-  padding: calc(var(--header-height) + var(--safe-top) + 30px) calc(20px + var(--safe-right)) calc(86px + var(--safe-bottom)) calc(20px + var(--safe-left));
+  padding: calc(var(--safe-top) + var(--header-gap) + var(--header-height) + 32px) calc(20px + var(--safe-right)) calc(86px + var(--safe-bottom)) calc(20px + var(--safe-left));
 }
 
 .theme-classic .card {
@@ -1557,15 +1561,14 @@ body.outdoor-mode .app-corner {
 
 @media (max-width: 680px) {
   .site-header {
-    --header-height: 50px;
-    min-height: calc(var(--header-height) + var(--safe-top));
+    --header-height: 46px;
+    min-height: var(--header-height);
     flex-wrap: wrap;
-    padding-top: calc(var(--safe-top) + 10px);
-    padding-bottom: 10px;
+    padding: 0 14px;
   }
 
   .app {
-    padding: calc(var(--header-height) + var(--safe-top) + 34px) calc(14px + var(--safe-right)) calc(122px + var(--safe-bottom)) calc(14px + var(--safe-left));
+    padding: calc(var(--safe-top) + var(--header-gap) + var(--header-height) + 34px) calc(14px + var(--safe-right)) calc(122px + var(--safe-bottom)) calc(14px + var(--safe-left));
   }
 
   .unit-lockup {
