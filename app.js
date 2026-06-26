@@ -5,12 +5,15 @@ const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
 const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
+const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v17";
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
   "./fragen.json",
+  "./wildflecken-quiz-emblem.svg",
+  "./wildflecken-quiz-emblem.png",
   "./manifest.webmanifest",
   "./icon.svg"
 ];
@@ -66,6 +69,7 @@ const operatorBtn = document.getElementById("operator-btn");
 const operatorThemeBtn = document.getElementById("operator-theme-btn");
 const operatorScoreboardBtn = document.getElementById("operator-scoreboard-btn");
 const operatorClearScoreboardBtn = document.getElementById("operator-clear-scoreboard-btn");
+const operatorClearStorageBtn = document.getElementById("operator-clear-storage-btn");
 const operatorOutdoorBtn = document.getElementById("operator-outdoor-btn");
 const operatorResetBtn = document.getElementById("operator-reset-btn");
 const operatorBackBtn = document.getElementById("operator-back-btn");
@@ -374,6 +378,85 @@ function deleteScoreboardEntry(entryId) {
   }
 
   renderScoreboard();
+}
+
+async function clearAppStorage() {
+  const shouldClear = confirm("Bist du dir sicher?");
+  if (!shouldClear) return;
+
+  stopQuestionTimer();
+  let cacheTouched = false;
+  let cacheRebuilt = false;
+  const wasOfflineReady = offlineReady;
+
+  try {
+    [
+      SCOREBOARD_STORAGE_KEY,
+      RUN_STATE_STORAGE_KEY,
+      THEME_STORAGE_KEY,
+      OUTDOOR_MODE_STORAGE_KEY
+    ].forEach((key) => localStorage.removeItem(key));
+  } catch (error) {
+    console.error("App-Speicher konnte nicht vollständig geleert werden.", error);
+  }
+
+  if ("caches" in window && navigator.onLine) {
+    try {
+      const freshCacheName = `${APP_CACHE_NAME}-fresh`;
+      await caches.delete(freshCacheName);
+
+      const freshCache = await caches.open(freshCacheName);
+      await freshCache.addAll(OFFLINE_ASSETS);
+
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames
+          .filter((cacheName) => cacheName.startsWith("bw-quiz-") && cacheName !== freshCacheName)
+          .map((cacheName) => caches.delete(cacheName))
+      );
+
+      cacheTouched = true;
+
+      const cache = await caches.open(APP_CACHE_NAME);
+      await Promise.all(
+        OFFLINE_ASSETS.map(async (asset) => {
+          const cacheKey = new URL(asset, window.location.href).href;
+          const response = await freshCache.match(cacheKey);
+          if (response) {
+            await cache.put(cacheKey, response.clone());
+          }
+        })
+      );
+      await caches.delete(freshCacheName);
+      cacheRebuilt = await verifyOfflineCache();
+    } catch (error) {
+      console.error("Cache konnte nicht vollständig gelöscht werden.", error);
+    }
+  }
+
+  currentIndex = 0;
+  correctCount = 0;
+  penalties = [];
+  jokerPenalties = [];
+  quizQuestions = [];
+  currentGroupName = "";
+  resultSavedForCurrentRun = false;
+  offlineReady = cacheTouched ? cacheRebuilt : wasOfflineReady;
+
+  if (groupNameInput) groupNameInput.value = "";
+  renderScoreboard();
+  updateConnectionStatus();
+  showScreen(introScreen);
+
+  if (cacheRebuilt) {
+    alert("App-Speicher wurde bereinigt. Der Offline-Cache wurde neu aufgebaut.");
+  } else if (cacheTouched) {
+    alert("App-Speicher wurde bereinigt. Für Offline-Nutzung bitte einmal mit Internet neu laden, bis „Online / offline bereit“ steht.");
+  } else {
+    alert(navigator.onLine
+      ? "App-Speicher wurde bereinigt. Der Offline-Cache wurde nicht gelöscht, weil er nicht neu aufgebaut werden konnte."
+      : "App-Speicher wurde bereinigt. Der Offline-Cache wurde im Flugmodus nicht gelöscht.");
+  }
 }
 
 function showScreen(screen) {
@@ -857,6 +940,9 @@ scoreboardClearBtn.addEventListener("click", clearScoreboard);
 operatorBtn.addEventListener("click", openOperatorScreen);
 operatorScoreboardBtn.addEventListener("click", showScoreboard);
 operatorClearScoreboardBtn.addEventListener("click", clearScoreboard);
+if (operatorClearStorageBtn) {
+  operatorClearStorageBtn.addEventListener("click", clearAppStorage);
+}
 operatorResetBtn.addEventListener("click", confirmResetToStartScreen);
 operatorBackBtn.addEventListener("click", closeOperatorScreen);
 if (operatorThemeBtn) {
