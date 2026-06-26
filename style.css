@@ -335,9 +335,10 @@ h3 {
 .operator-section-title {
   margin: 0;
   color: var(--gold);
-  font-size: 15px;
+  font-size: clamp(19px, 2.3vw, 24px);
   font-weight: 950;
   line-height: 1.1;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: .04em;
 }
@@ -1347,7 +1348,10 @@ button:active {
 }
 
 .theme-classic .operator-section-title {
+  margin: 0;
   color: var(--accent);
+  font-size: clamp(28px, 4.4vw, 36px);
+  text-align: center;
   text-transform: none;
   letter-spacing: 0;
 }
@@ -1360,7 +1364,7 @@ button:active {
 }
 
 .theme-classic .operator-actions .danger {
-  color: var(--danger);
+  color: #fff;
 }
 
 .theme-classic .operator-scale-control {
