@@ -5,7 +5,8 @@ const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
 const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
-const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v25";
+const QUIZ_SCALE_STORAGE_KEY = "bwQuizScale";
+const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v27";
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
@@ -70,6 +71,8 @@ const operatorScoreboardBtn = document.getElementById("operator-scoreboard-btn")
 const operatorClearScoreboardBtn = document.getElementById("operator-clear-scoreboard-btn");
 const operatorClearStorageBtn = document.getElementById("operator-clear-storage-btn");
 const operatorOutdoorBtn = document.getElementById("operator-outdoor-btn");
+const operatorQuizScaleInput = document.getElementById("operator-quiz-scale");
+const operatorQuizScaleValue = document.getElementById("operator-quiz-scale-value");
 const operatorResetBtn = document.getElementById("operator-reset-btn");
 const operatorBackBtn = document.getElementById("operator-back-btn");
 const groupNameInput = document.getElementById("group-name");
@@ -393,7 +396,8 @@ async function clearAppStorage() {
       SCOREBOARD_STORAGE_KEY,
       RUN_STATE_STORAGE_KEY,
       THEME_STORAGE_KEY,
-      OUTDOOR_MODE_STORAGE_KEY
+      OUTDOOR_MODE_STORAGE_KEY,
+      QUIZ_SCALE_STORAGE_KEY
     ].forEach((key) => localStorage.removeItem(key));
   } catch (error) {
     console.error("App-Speicher konnte nicht vollständig geleert werden.", error);
@@ -443,6 +447,7 @@ async function clearAppStorage() {
   offlineReady = cacheTouched ? cacheRebuilt : wasOfflineReady;
 
   if (groupNameInput) groupNameInput.value = "";
+  applyQuizScale(100);
   renderScoreboard();
   updateConnectionStatus();
   showScreen(introScreen);
@@ -558,6 +563,47 @@ function applyOutdoorMode(enabled) {
 
 function toggleOutdoorMode() {
   applyOutdoorMode(!document.body.classList.contains("outdoor-mode"));
+}
+
+function normalizeQuizScale(value) {
+  const scale = Number(value);
+  if (!Number.isFinite(scale)) return 100;
+  return Math.min(100, Math.max(80, Math.round(scale / 5) * 5));
+}
+
+function getSavedQuizScale() {
+  try {
+    return normalizeQuizScale(localStorage.getItem(QUIZ_SCALE_STORAGE_KEY) || 100);
+  } catch (error) {
+    return 100;
+  }
+}
+
+function saveQuizScale(value) {
+  try {
+    localStorage.setItem(QUIZ_SCALE_STORAGE_KEY, String(value));
+  } catch (error) {
+    // Die App funktioniert auch ohne gespeicherte Quizfeld-Größe.
+  }
+}
+
+function applyQuizScale(value) {
+  const scale = normalizeQuizScale(value);
+  document.documentElement.style.setProperty("--quiz-field-scale", String(scale / 100));
+
+  if (operatorQuizScaleInput) {
+    operatorQuizScaleInput.value = String(scale);
+  }
+
+  if (operatorQuizScaleValue) {
+    operatorQuizScaleValue.textContent = `${scale}%`;
+  }
+
+  saveQuizScale(scale);
+}
+
+function updateQuizScale(event) {
+  applyQuizScale(event.target.value);
 }
 
 function updateConnectionStatus() {
@@ -950,10 +996,15 @@ if (operatorThemeBtn) {
 if (operatorOutdoorBtn) {
   operatorOutdoorBtn.addEventListener("click", toggleOutdoorMode);
 }
+if (operatorQuizScaleInput) {
+  operatorQuizScaleInput.addEventListener("input", updateQuizScale);
+  operatorQuizScaleInput.addEventListener("change", updateQuizScale);
+}
 window.addEventListener("online", updateConnectionStatus);
 window.addEventListener("offline", updateConnectionStatus);
 applyTheme(getSavedTheme() || "exhibition");
 applyOutdoorMode(getSavedOutdoorMode());
+applyQuizScale(getSavedQuizScale());
 updateConnectionStatus();
 
 loadQuestions()

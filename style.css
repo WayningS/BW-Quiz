@@ -20,6 +20,7 @@
   --safe-left: env(safe-area-inset-left, 0px);
   --header-height: 44px;
   --header-gap: 12px;
+  --quiz-field-scale: 1;
 }
 
 html,
@@ -334,6 +335,41 @@ h3 {
 
 .operator-actions > button:last-child {
   grid-column: 1 / -1;
+}
+
+.operator-scale-control {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, .055);
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--red);
+  color: var(--gold);
+  font-weight: 950;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.operator-scale-control span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.operator-scale-control strong {
+  color: var(--red);
+}
+
+.operator-scale-control input {
+  width: 100%;
+  accent-color: var(--red);
+}
+
+#quiz-screen {
+  transform: scale(var(--quiz-field-scale));
+  transform-origin: top center;
 }
 
 .mission-map {
@@ -1259,6 +1295,24 @@ button:active {
 .theme-classic .danger {
   color: var(--danger);
   border-color: rgba(211, 106, 93, .45);
+}
+
+.theme-classic .operator-scale-control {
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid var(--border);
+  border-left: 0;
+  border-radius: 18px;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.theme-classic .operator-scale-control strong {
+  color: var(--accent);
+}
+
+.theme-classic .operator-scale-control input {
+  accent-color: var(--accent);
 }
 
 .theme-classic .top-row {
