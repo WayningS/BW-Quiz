@@ -173,9 +173,9 @@ h1 {
 }
 
 h2 {
-  margin: 16px 0 18px;
+  margin: 24px 0;
   color: var(--ink);
-  font-size: clamp(24px, 4.3vw, 38px);
+  font-size: clamp(26px, 4.8vw, 42px);
   font-weight: 950;
   line-height: 1.08;
 }
@@ -569,7 +569,7 @@ button:active {
 
 .progressbar {
   height: 11px;
-  margin-top: 14px;
+  margin-top: 10px;
   overflow: hidden;
   background: rgba(255, 255, 255, .14);
   border: 1px solid rgba(17, 17, 17, .12);
@@ -585,7 +585,7 @@ button:active {
 
 .answers {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .answer {
@@ -623,8 +623,8 @@ button:active {
 .feedback,
 .penalty,
 .joker-choice {
-  margin-top: 14px;
-  padding: 14px 16px;
+  margin-top: 18px;
+  padding: 16px 18px;
   background: rgba(255, 255, 255, .055);
   border: 1px solid var(--line);
   color: var(--muted);
@@ -654,7 +654,7 @@ button:active {
 .penalty-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .result-grid {
@@ -824,7 +824,7 @@ button:active {
 }
 
 .joker-box {
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .joker-button {
@@ -845,13 +845,13 @@ button:active {
 .timer-wrapper {
   display: grid;
   place-items: center;
-  margin: 14px 0 8px;
+  margin: 22px 0 12px;
 }
 
 .timer-circle {
   position: relative;
-  width: 198px;
-  height: 198px;
+  width: 220px;
+  height: 220px;
   background: rgba(255, 255, 255, .055);
   border: 1px solid var(--line);
   border-radius: 50%;
@@ -859,8 +859,8 @@ button:active {
 }
 
 .timer-svg {
-  width: 198px;
-  height: 198px;
+  width: 220px;
+  height: 220px;
   transform: rotate(-90deg);
 }
 
@@ -892,13 +892,13 @@ button:active {
 
 .timer-seconds {
   color: var(--ink);
-  font-size: 52px;
+  font-size: 58px;
   font-weight: 950;
   line-height: 1;
 }
 
 .timer-label {
-  margin-top: 4px;
+  margin-top: 6px;
   color: var(--muted);
   font-weight: 950;
   text-transform: uppercase;
@@ -1160,8 +1160,8 @@ button:active {
 
 .theme-classic h2 {
   color: var(--text);
-  font-size: clamp(24px, 4.3vw, 36px);
-  margin: 16px 0 18px;
+  font-size: clamp(25px, 5vw, 38px);
+  margin: 26px 0;
   line-height: 1.1;
 }
 
@@ -1416,7 +1416,7 @@ button:active {
 
 .theme-classic .timer-seconds {
   color: var(--text);
-  font-size: 50px;
+  font-size: 54px;
 }
 
 .theme-classic .time-up .timer-ring,
