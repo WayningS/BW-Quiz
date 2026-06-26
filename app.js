@@ -5,7 +5,7 @@ const THEME_STORAGE_KEY = "bwQuizTheme";
 const SCOREBOARD_STORAGE_KEY = "bwQuizScoreboard";
 const RUN_STATE_STORAGE_KEY = "bwQuizCurrentRun";
 const OUTDOOR_MODE_STORAGE_KEY = "bwQuizOutdoorMode";
-const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v17";
+const APP_CACHE_NAME = "bw-quiz-scoreboard-test-v19";
 const OFFLINE_ASSETS = [
   "./",
   "./index.html",
@@ -13,7 +13,6 @@ const OFFLINE_ASSETS = [
   "./app.js",
   "./fragen.json",
   "./wildflecken-quiz-emblem.svg",
-  "./wildflecken-quiz-emblem.png",
   "./manifest.webmanifest",
   "./icon.svg"
 ];
